@@ -10,15 +10,22 @@ namespace LD50.Entities {
         Water,
     }
 
+    public enum ControllerType {
+        XboxController,
+        PS4Controller,
+    }
+
     public class ActionPrompt : Node2D {
         [GetNode("IconPrompt")] private Sprite iconPrompt;
         [GetNode("ButtonPrompt")] private Sprite buttonPrompt;
         [GetNode("AnimationPlayer")] private AnimationPlayer animationPlayer;
 
         private bool showKeyboardPrompt = true;
+        private ControllerType controllerType = ControllerType.XboxController;
 
-        private readonly Rect2 keyboardButtonPromptRect = new Rect2(16, 0, 16, 16);
         private readonly Rect2 xboxGamePadButtonPromptRect = new Rect2(0, 0, 16, 16);
+        private readonly Rect2 keyboardButtonPromptRect = new Rect2(16, 0, 16, 16);
+        private readonly Rect2 psGamePadButtonPromptRect = new Rect2(32, 0, 16, 16);
 
         private readonly Rect2 wateringCanPromptRect = new Rect2(0, 16, 16, 16);
         private readonly Rect2 hoePromptRect = new Rect2(16, 16, 16, 16);
@@ -39,9 +46,38 @@ namespace LD50.Entities {
                 showKeyboardPrompt = true;
             } else if (@event is InputEventJoypadButton || @event is InputEventJoypadMotion) {
                 showKeyboardPrompt = false;
+                controllerType = determineControllerTypeByName(
+                    Input.GetJoyName((int) Input.GetConnectedJoypads()[@event.Device])
+                );
             }
 
-            buttonPrompt.RegionRect = showKeyboardPrompt ? keyboardButtonPromptRect : xboxGamePadButtonPromptRect;
+            if (showKeyboardPrompt) {
+                buttonPrompt.RegionRect = keyboardButtonPromptRect;
+                return;
+            }
+
+            switch (controllerType) {
+                case ControllerType.XboxController:
+                    buttonPrompt.RegionRect = xboxGamePadButtonPromptRect;
+                    break;
+                case ControllerType.PS4Controller:
+                    buttonPrompt.RegionRect = psGamePadButtonPromptRect;
+                    break;
+            }
+        }
+
+        private ControllerType determineControllerTypeByName(string name) {
+            switch (name.ToLower()) {
+                case "xbox one controller":
+                case "xinput gamepad":
+                    return ControllerType.XboxController;
+                case "ps4 controller":
+                    return ControllerType.PS4Controller;
+                // TODO: add more controllers...
+            }
+
+            // If everything fails, just fall back to xbox controller
+            return ControllerType.XboxController;
         }
 
         public void ShowPrompt(ActionPromptEvent @event) {
