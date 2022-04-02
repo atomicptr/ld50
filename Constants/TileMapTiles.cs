@@ -7,15 +7,24 @@ namespace LD50.Constants {
         Ground = 2,
         GroundWithGrass = 3,
         Block = 4,
-        FarmplotNorthWest = 5,
-        FarmplotNorthMid = 6,
-        FarmplotNorthEast = 7,
-        FarmplotMidWest = 8,
-        FarmplotMidMid = 9,
-        FarmplotMidEast = 10,
-        FarmplotSouthWest = 11,
-        FarmplotSouthMid = 12,
-        FarmplotSouthEast = 13,
+        FarmPlotNorthWest = 5,
+        FarmPlotNorthMid = 6,
+        FarmPlotNorthEast = 7,
+        FarmPlotMidWest = 8,
+        FarmPlotMidMid = 9,
+        FarmPlotMidEast = 10,
+        FarmPlotSouthWest = 11,
+        FarmPlotSouthMid = 12,
+        FarmPlotSouthEast = 13,
+        PlowedFarmPlotNorthWest = 14,
+        PlowedFarmPlotNorthMid = 15,
+        PlowedFarmPlotNorthEast = 16,
+        PlowedFarmPlotMidWest = 17,
+        PlowedFarmPlotMidMid = 18,
+        PlowedFarmPlotMidEast = 19,
+        PlowedFarmPlotSouthWest = 20,
+        PlowedFarmPlotSouthMid = 21,
+        PlowedFarmPlotSouthEast = 22,
     }
 
     public static class TileMapTilesExtension {
@@ -30,9 +39,19 @@ namespace LD50.Constants {
             }
         }
 
-        public static bool IsFarmland(this TileMapTiles tile) {
+        public static bool IsFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
-            return index >= (int) TileMapTiles.FarmplotNorthWest && index <= (int) TileMapTiles.FarmplotSouthEast;
+            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.FarmPlotSouthEast;
+        }
+
+        public static bool IsUntouchedFarmPlot(this TileMapTiles tile) {
+            var index = (int) tile;
+            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
+        }
+
+        public static bool IsPlowedFarmPlot(this TileMapTiles tile) {
+            var index = (int) tile;
+            return index >= (int) TileMapTiles.PlowedFarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
         }
     }
 }

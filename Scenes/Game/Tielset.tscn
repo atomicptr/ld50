@@ -35,56 +35,110 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 32, 0, 16, 16 )
 
-[node name="FarmplotNorthWest" type="Sprite" parent="."]
+[node name="FarmPlotNorthWest" type="Sprite" parent="."]
 position = Vector2( 48, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 48, 0, 16, 16 )
 
-[node name="FarmplotNorthMid" type="Sprite" parent="."]
+[node name="FarmPlotNorthMid" type="Sprite" parent="."]
 position = Vector2( 64, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 0, 16, 16 )
 
-[node name="FarmplotNorthEast" type="Sprite" parent="."]
+[node name="FarmPlotNorthEast" type="Sprite" parent="."]
 position = Vector2( 80, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 80, 0, 16, 16 )
 
-[node name="FarmplotMidWest" type="Sprite" parent="."]
+[node name="FarmPlotMidWest" type="Sprite" parent="."]
 position = Vector2( 48, 16 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 48, 16, 16, 16 )
 
-[node name="FarmplotMidMid" type="Sprite" parent="."]
+[node name="FarmPlotMidMid" type="Sprite" parent="."]
 position = Vector2( 64, 16 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 16, 16, 16 )
 
-[node name="FarmplotMidEast" type="Sprite" parent="."]
+[node name="FarmPlotMidEast" type="Sprite" parent="."]
 position = Vector2( 80, 16 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 80, 16, 16, 16 )
 
-[node name="FarmplotSouthWest" type="Sprite" parent="."]
+[node name="FarmPlotSouthWest" type="Sprite" parent="."]
 position = Vector2( 48, 32 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 48, 32, 16, 16 )
 
-[node name="FarmplotSouthMid" type="Sprite" parent="."]
+[node name="FarmPlotSouthMid" type="Sprite" parent="."]
 position = Vector2( 64, 32 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 32, 16, 16 )
 
-[node name="FarmplotSouthEast" type="Sprite" parent="."]
+[node name="FarmPlotSouthEast" type="Sprite" parent="."]
 position = Vector2( 80, 32 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 80, 32, 16, 16 )
+
+[node name="PlowedFarmPlotNorthWest" type="Sprite" parent="."]
+position = Vector2( 48, 48 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 48, 16, 16 )
+
+[node name="PlowedFarmPlotNorthMid" type="Sprite" parent="."]
+position = Vector2( 64, 48 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 48, 16, 16 )
+
+[node name="PlowedFarmPlotNorthEast" type="Sprite" parent="."]
+position = Vector2( 80, 48 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 48, 16, 16 )
+
+[node name="PlowedFarmPlotMidWest" type="Sprite" parent="."]
+position = Vector2( 48, 64 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 64, 16, 16 )
+
+[node name="PlowedFarmPlotMidMid" type="Sprite" parent="."]
+position = Vector2( 64, 64 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 64, 16, 16 )
+
+[node name="PlowedFarmPlotMidEast" type="Sprite" parent="."]
+position = Vector2( 80, 64 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 64, 16, 16 )
+
+[node name="PlowedFarmPlotSouthWest" type="Sprite" parent="."]
+position = Vector2( 48, 80 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 80, 16, 16 )
+
+[node name="PlowedFarmPlotSouthMid" type="Sprite" parent="."]
+position = Vector2( 64, 80 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 80, 16, 16 )
+
+[node name="PlowedFarmPlotSouthEast" type="Sprite" parent="."]
+position = Vector2( 80, 80 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 80, 16, 16 )

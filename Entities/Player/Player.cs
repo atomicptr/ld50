@@ -11,8 +11,6 @@ namespace LD50.Entities {
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
-
-            //GetTree().CurrentScene.GetNode<Grid>("Grid");;
         }
 
         public override void _Process(float delta) {
