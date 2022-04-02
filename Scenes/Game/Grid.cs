@@ -9,14 +9,34 @@ namespace LD50.Scenes.Game {
     public class Grid : Node2D {
         [GetNode("TileMap")] private TileMap tileMap;
 
+        public int NextPaymentThreshold {
+            get => nextPaymentThreshold;
+            private set {
+                nextPaymentThreshold = value;
+
+                if (!IsInsideTree()) {
+                    ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.NewPaymentThreshold), nextPaymentThreshold));
+                    return;
+                }
+
+                EventBus.Emit(nameof(EventBus.NewPaymentThreshold), nextPaymentThreshold);
+            }
+        }
+
+        private int nextPaymentThreshold;
+
         private Dictionary<Vector2, int> turnPlotWasWatered = new Dictionary<Vector2, int>();
 
         private int turn = 1;
 
         private const int TURNS_PLOT_STAYS_WATERED = 300;
+        public const int FIRST_PAYMENT_THRESHOLD = 200;
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
+
+            // set initial payment threshold
+            NextPaymentThreshold = FIRST_PAYMENT_THRESHOLD;
         }
 
         public Vector2 MapToWorld(Vector2 coords) {

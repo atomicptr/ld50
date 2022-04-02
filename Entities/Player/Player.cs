@@ -13,6 +13,7 @@ namespace LD50.Entities {
                 money = Mathf.Clamp(value, 0, int.MaxValue);
 
                 if (!IsInsideTree()) {
+                    ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.MoneyValueChanged), money));
                     return;
                 }
 
@@ -29,6 +30,7 @@ namespace LD50.Entities {
                 wateringCanAmount = Mathf.Clamp(value, 0, WateringCanMaximum);
 
                 if (!IsInsideTree()) {
+                    ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.WateringCanAmountChanged), wateringCanAmount));
                     return;
                 }
 
@@ -38,7 +40,7 @@ namespace LD50.Entities {
 
         private int wateringCanAmount;
 
-        [Export] public readonly int WateringCanMaximum = 5;
+        public int WateringCanMaximum = 5;
 
         [GetNode("/root/Game/Grid")] private Grid grid;
         [GetNode("MoveCooldown")] private Timer moveCooldown;
@@ -165,14 +167,13 @@ namespace LD50.Entities {
             if (targetTile.IsPlowedFarmPlot() && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 grid.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
-                GD.Print("Watering Can Value: ", WateringCanAmount);
                 playAnimation(ANIMATION_INTERACT);
                 return;
             }
 
             if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
                 // TODO: if plot is watered (and has no plant), offer seed selection
-                GD.Print("Seed!?");
+                grid.NextTurn();
                 playAnimation(ANIMATION_INTERACT);
             }
 
@@ -182,7 +183,7 @@ namespace LD50.Entities {
                     // TODO: refactor this
                     if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
                         WateringCanAmount = WateringCanMaximum;
-                        GD.Print("Refilled Watering Can");
+                        grid.NextTurn();
                         playAnimation(ANIMATION_INTERACT);
                     }
                 }
