@@ -1,6 +1,3 @@
-using System;
-using Godot;
-
 namespace LD50.Constants {
     public enum TileMapTiles {
         InvisibleBarrier = 0,
@@ -26,6 +23,24 @@ namespace LD50.Constants {
         PlowedFarmPlotSouthWest = 20,
         PlowedFarmPlotSouthMid = 21,
         PlowedFarmPlotSouthEast = 22,
+        WateredFarmPlotNorthWest = 23,
+        WateredFarmPlotNorthMid = 24,
+        WateredFarmPlotNorthEast = 25,
+        WateredFarmPlotMidWest = 26,
+        WateredFarmPlotMidMid = 27,
+        WateredFarmPlotMidEast = 28,
+        WateredFarmPlotSouthWest = 29,
+        WateredFarmPlotSouthMid = 30,
+        WateredFarmPlotSouthEast = 31,
+        WateredPlowedFarmPlotNorthWest = 32,
+        WateredPlowedFarmPlotNorthMid = 33,
+        WateredPlowedFarmPlotNorthEast = 34,
+        WateredPlowedFarmPlotMidWest = 35,
+        WateredPlowedFarmPlotMidMid = 36,
+        WateredPlowedFarmPlotMidEast = 37,
+        WateredPlowedFarmPlotSouthWest = 38,
+        WateredPlowedFarmPlotSouthMid = 39,
+        WateredPlowedFarmPlotSouthEast = 40,
     }
 
     public static class TileMapTilesExtension {
@@ -52,7 +67,8 @@ namespace LD50.Constants {
 
         public static bool IsPlowedFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
-            return index >= (int) TileMapTiles.PlowedFarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
+            return index >= (int) TileMapTiles.PlowedFarmPlotNorthWest &&
+                   index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
         }
 
         public static TileMapTiles ToPlowedFarmPlot(this TileMapTiles tile) {
@@ -82,6 +98,94 @@ namespace LD50.Constants {
                     return TileMapTiles.PlowedFarmPlotSouthMid;
                     break;
                 case TileMapTiles.FarmPlotSouthEast:
+                    return TileMapTiles.PlowedFarmPlotSouthEast;
+                default:
+                    // invalid state, don't do anything
+                    return tile;
+            }
+        }
+
+        public static TileMapTiles ToWateredFarmPlot(this TileMapTiles tile) {
+            switch (tile) {
+                case TileMapTiles.FarmPlotNorthWest:
+                    return TileMapTiles.WateredFarmPlotNorthWest;
+                case TileMapTiles.FarmPlotNorthMid:
+                    return TileMapTiles.WateredFarmPlotNorthMid;
+                case TileMapTiles.FarmPlotNorthEast:
+                    return TileMapTiles.WateredFarmPlotNorthEast;
+                case TileMapTiles.FarmPlotMidWest:
+                    return TileMapTiles.WateredFarmPlotMidWest;
+                case TileMapTiles.FarmPlotMidMid:
+                    return TileMapTiles.WateredFarmPlotMidMid;
+                case TileMapTiles.FarmPlotMidEast:
+                    return TileMapTiles.WateredFarmPlotMidEast;
+                case TileMapTiles.FarmPlotSouthWest:
+                    return TileMapTiles.WateredFarmPlotSouthWest;
+                case TileMapTiles.FarmPlotSouthMid:
+                    return TileMapTiles.WateredFarmPlotSouthMid;
+                case TileMapTiles.FarmPlotSouthEast:
+                    return TileMapTiles.WateredFarmPlotSouthEast;
+                case TileMapTiles.PlowedFarmPlotNorthWest:
+                    return TileMapTiles.WateredPlowedFarmPlotNorthWest;
+                case TileMapTiles.PlowedFarmPlotNorthMid:
+                    return TileMapTiles.WateredPlowedFarmPlotNorthMid;
+                case TileMapTiles.PlowedFarmPlotNorthEast:
+                    return TileMapTiles.WateredPlowedFarmPlotNorthEast;
+                case TileMapTiles.PlowedFarmPlotMidWest:
+                    return TileMapTiles.WateredPlowedFarmPlotMidWest;
+                case TileMapTiles.PlowedFarmPlotMidMid:
+                    return TileMapTiles.WateredPlowedFarmPlotMidMid;
+                case TileMapTiles.PlowedFarmPlotMidEast:
+                    return TileMapTiles.WateredPlowedFarmPlotMidEast;
+                case TileMapTiles.PlowedFarmPlotSouthWest:
+                    return TileMapTiles.WateredPlowedFarmPlotSouthWest;
+                case TileMapTiles.PlowedFarmPlotSouthMid:
+                    return TileMapTiles.WateredPlowedFarmPlotSouthMid;
+                case TileMapTiles.PlowedFarmPlotSouthEast:
+                    return TileMapTiles.WateredPlowedFarmPlotSouthEast;
+                default:
+                    // invalid state, don't do anything
+                    return tile;
+            }
+        }
+
+        public static TileMapTiles ToDryFarmPlot(this TileMapTiles tile) {
+            switch (tile) {
+                case TileMapTiles.WateredFarmPlotNorthWest:
+                    return TileMapTiles.FarmPlotNorthWest;
+                case TileMapTiles.WateredFarmPlotNorthMid:
+                    return TileMapTiles.FarmPlotNorthMid;
+                case TileMapTiles.WateredFarmPlotNorthEast:
+                    return TileMapTiles.FarmPlotNorthEast;
+                case TileMapTiles.WateredFarmPlotMidWest:
+                    return TileMapTiles.FarmPlotMidWest;
+                case TileMapTiles.WateredFarmPlotMidMid:
+                    return TileMapTiles.FarmPlotMidMid;
+                case TileMapTiles.WateredFarmPlotMidEast:
+                    return TileMapTiles.FarmPlotMidEast;
+                case TileMapTiles.WateredFarmPlotSouthWest:
+                    return TileMapTiles.FarmPlotSouthWest;
+                case TileMapTiles.WateredFarmPlotSouthMid:
+                    return TileMapTiles.FarmPlotSouthMid;
+                case TileMapTiles.WateredFarmPlotSouthEast:
+                    return TileMapTiles.FarmPlotSouthEast;
+                case TileMapTiles.WateredPlowedFarmPlotNorthWest:
+                    return TileMapTiles.PlowedFarmPlotNorthWest;
+                case TileMapTiles.WateredPlowedFarmPlotNorthMid:
+                    return TileMapTiles.PlowedFarmPlotNorthMid;
+                case TileMapTiles.WateredPlowedFarmPlotNorthEast:
+                    return TileMapTiles.PlowedFarmPlotNorthEast;
+                case TileMapTiles.WateredPlowedFarmPlotMidWest:
+                    return TileMapTiles.PlowedFarmPlotMidWest;
+                case TileMapTiles.WateredPlowedFarmPlotMidMid:
+                    return TileMapTiles.PlowedFarmPlotMidMid;
+                case TileMapTiles.WateredPlowedFarmPlotMidEast:
+                    return TileMapTiles.PlowedFarmPlotMidEast;
+                case TileMapTiles.WateredPlowedFarmPlotSouthWest:
+                    return TileMapTiles.PlowedFarmPlotSouthWest;
+                case TileMapTiles.WateredPlowedFarmPlotSouthMid:
+                    return TileMapTiles.PlowedFarmPlotSouthMid;
+                case TileMapTiles.WateredPlowedFarmPlotSouthEast:
                     return TileMapTiles.PlowedFarmPlotSouthEast;
                 default:
                     // invalid state, don't do anything
