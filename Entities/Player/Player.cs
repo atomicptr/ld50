@@ -38,6 +38,7 @@ namespace LD50.Entities {
         [GetNode("/root/Game/Grid")] private Grid grid;
         [GetNode("MoveCooldown")] private Timer moveCooldown;
         [GetNode("AnimationPlayer")] private AnimationPlayer animationPlayer;
+        [GetNode("ActionPrompt")] private ActionPrompt actionPrompt;
 
         private Vector2 playerGridPosition = Vector2.Zero;
 
@@ -52,8 +53,7 @@ namespace LD50.Entities {
             playerGridPosition = grid.WorldToMap(Position);
             var direction = determineDirection();
 
-            // TODO: add an actual button prompt...
-            Modulate = canInteract() ? Colors.Green : Colors.White;
+            actionPrompt.Hide();
 
             if (canInteract() && Input.IsActionJustPressed(InputActions.INTERACT)) {
                 interact();
@@ -110,6 +110,7 @@ namespace LD50.Entities {
             var targetTile = currentTile.Value;
 
             if (targetTile.IsUntouchedFarmPlot()) {
+                actionPrompt.ShowPrompt(ActionPromptEvent.Hoe);
                 return true;
             }
 
@@ -118,10 +119,12 @@ namespace LD50.Entities {
                 !grid.IsFarmPlotWatered(playerGridPosition) &&
                 WateringCanAmount > 0
             ) {
+                actionPrompt.ShowPrompt(ActionPromptEvent.WateringCan);
                 return true;
             }
 
             if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
+                actionPrompt.ShowPrompt(ActionPromptEvent.Seed);
                 return true;
             }
 
@@ -130,6 +133,7 @@ namespace LD50.Entities {
                 if (tileAbove.HasValue) {
                     // TODO: refactor this
                     if (WateringCanAmount< WateringCanMaximum && tileAbove.Value == TileMapTiles.WaterTankBottom) {
+                        actionPrompt.ShowPrompt(ActionPromptEvent.Water);
                         return true;
                     }
                 }
