@@ -37,8 +37,12 @@ namespace LD50.Entities {
 
         [GetNode("/root/Game/Grid")] private Grid grid;
         [GetNode("MoveCooldown")] private Timer moveCooldown;
+        [GetNode("AnimationPlayer")] private AnimationPlayer animationPlayer;
 
         private Vector2 playerGridPosition = Vector2.Zero;
+
+        private const string ANIMATION_MOVE = "Move";
+        private const string ANIMATION_INTERACT = "Interact";
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
@@ -73,6 +77,8 @@ namespace LD50.Entities {
             Position = grid.MapToWorld(playerGridPosition + direction);
 
             grid.NextTurn();
+
+            playAnimation(ANIMATION_MOVE);
             moveCooldown.Start();
         }
 
@@ -91,7 +97,7 @@ namespace LD50.Entities {
         }
 
         private bool isCurrentlyMoving() {
-            return moveCooldown.TimeLeft > 0.00001f;
+            return !moveCooldown.IsStopped();
         }
 
         private bool canInteract() {
@@ -143,6 +149,7 @@ namespace LD50.Entities {
 
             if (targetTile.IsUntouchedFarmPlot()) {
                 grid.PlowFarmPlot(playerGridPosition);
+                playAnimation(ANIMATION_INTERACT);
                 return;
             }
 
@@ -150,12 +157,14 @@ namespace LD50.Entities {
                 grid.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
                 GD.Print("Watering Can Value: ", WateringCanAmount);
+                playAnimation(ANIMATION_INTERACT);
                 return;
             }
 
             if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
                 // TODO: if plot is watered (and has no plant), offer seed selection
                 GD.Print("Seed!?");
+                playAnimation(ANIMATION_INTERACT);
             }
 
             if (targetTile == TileMapTiles.InteractPlate) {
@@ -165,6 +174,7 @@ namespace LD50.Entities {
                     if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
                         WateringCanAmount = WateringCanMaximum;
                         GD.Print("Refilled Watering Can");
+                        playAnimation(ANIMATION_INTERACT);
                     }
                 }
             }
@@ -172,6 +182,14 @@ namespace LD50.Entities {
             // TODO: if plot has plant and is fully grown, grab produce and reset field to base state
 
             // TODO: if plot has plant and is not watered (anymore) water again
+        }
+
+        private void playAnimation(string animationName) {
+            if (animationPlayer.IsPlaying()) {
+                return;
+            }
+            animationPlayer.CurrentAnimation = animationName;
+            animationPlayer.Play();
         }
     }
 }
