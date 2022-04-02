@@ -2,6 +2,14 @@
 
 My game submission for the Ludum Dare #50 Compo "Delay the inevitable".
 
+## Description
+
+TODO
+
+## Play!
+
+TODO
+
 ## License
 
 GPLv3
