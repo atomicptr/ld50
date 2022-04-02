@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace LD50.Constants {
@@ -41,17 +42,51 @@ namespace LD50.Constants {
 
         public static bool IsFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
-            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.FarmPlotSouthEast;
+            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
         }
 
         public static bool IsUntouchedFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
-            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
+            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.FarmPlotSouthEast;
         }
 
         public static bool IsPlowedFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
             return index >= (int) TileMapTiles.PlowedFarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
+        }
+
+        public static TileMapTiles ToPlowedFarmPlot(this TileMapTiles tile) {
+            switch (tile) {
+                case TileMapTiles.FarmPlotNorthWest:
+                    return TileMapTiles.PlowedFarmPlotNorthWest;
+                    break;
+                case TileMapTiles.FarmPlotNorthMid:
+                    return TileMapTiles.PlowedFarmPlotNorthMid;
+                    break;
+                case TileMapTiles.FarmPlotNorthEast:
+                    return TileMapTiles.PlowedFarmPlotNorthEast;
+                    break;
+                case TileMapTiles.FarmPlotMidWest:
+                    return TileMapTiles.PlowedFarmPlotMidWest;
+                    break;
+                case TileMapTiles.FarmPlotMidMid:
+                    return TileMapTiles.PlowedFarmPlotMidMid;
+                    break;
+                case TileMapTiles.FarmPlotMidEast:
+                    return TileMapTiles.PlowedFarmPlotMidEast;
+                    break;
+                case TileMapTiles.FarmPlotSouthWest:
+                    return TileMapTiles.PlowedFarmPlotSouthWest;
+                    break;
+                case TileMapTiles.FarmPlotSouthMid:
+                    return TileMapTiles.PlowedFarmPlotSouthMid;
+                    break;
+                case TileMapTiles.FarmPlotSouthEast:
+                    return TileMapTiles.PlowedFarmPlotSouthEast;
+                default:
+                    // invalid state, don't do anything
+                    return tile;
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using LD50.Common;
 using LD50.Constants;
@@ -38,6 +39,19 @@ namespace LD50.Scenes.Game {
                 return false;
             }
             return !tile.Value.IsBarrier();
+        }
+
+        public void Plow(Vector2 coords) {
+            var tile = CellAt(coords);
+            if (!tile.HasValue) {
+                return;
+            }
+
+            if (!tile.Value.IsUntouchedFarmPlot()) {
+                return;
+            }
+
+            tileMap.SetCellv(coords, (int)tile.Value.ToPlowedFarmPlot());
         }
 
         public void NextTurn() {

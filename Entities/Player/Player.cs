@@ -14,7 +14,12 @@ namespace LD50.Entities {
         }
 
         public override void _Process(float delta) {
+            var playerGridPos = grid.WorldToMap(Position);
             var direction = determineDirection();
+
+            if (Input.IsActionJustPressed(InputActions.INTERACT)) {
+                grid.Plow(playerGridPos);
+            }
 
             if (direction == Vector2.Zero) {
                 return;
@@ -24,7 +29,6 @@ namespace LD50.Entities {
                 return;
             }
 
-            var playerGridPos = grid.WorldToMap(Position);
             var targetPos = playerGridPos + direction;
 
             if (!grid.IsVacant(targetPos)) {
