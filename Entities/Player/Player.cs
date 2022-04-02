@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using LD50.Common;
 using LD50.Constants;
@@ -6,8 +5,11 @@ using LD50.Scenes.Game;
 
 namespace LD50.Entities {
     public class Player : Node2D {
-        [Signal] public delegate void MoneyValueChanged(int money);
-        [Signal] public delegate void WateringCanAmountChanged(int amount);
+        [Signal]
+        public delegate void MoneyValueChanged(int money);
+
+        [Signal]
+        public delegate void WateringCanAmountChanged(int amount);
 
         [Export]
         public int Money {
@@ -17,16 +19,18 @@ namespace LD50.Entities {
                 EmitSignal(nameof(MoneyValueChanged), money);
             }
         }
+
         private int money;
 
         [Export]
         public int WateringCanAmount {
-            get => WateringCanAmount;
+            get => wateringCanAmount;
             set {
                 wateringCanAmount = Mathf.Clamp(value, 0, WateringCanMaximum);
                 EmitSignal(nameof(WateringCanAmountChanged), wateringCanAmount);
             }
         }
+
         private int wateringCanAmount;
 
         [Export] public readonly int WateringCanMaximum = 5;
@@ -97,12 +101,32 @@ namespace LD50.Entities {
                 return false;
             }
 
-            if (currentTile.Value.IsUntouchedFarmPlot()) {
+            var targetTile = currentTile.Value;
+
+            if (targetTile.IsUntouchedFarmPlot()) {
                 return true;
             }
 
-            if (currentTile.Value.IsPlowedFarmPlot() && !grid.IsFarmPlotWatered(playerGridPosition)) {
+            if (
+                targetTile.IsPlowedFarmPlot() &&
+                !grid.IsFarmPlotWatered(playerGridPosition) &&
+                WateringCanAmount > 0
+            ) {
                 return true;
+            }
+
+            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
+                return true;
+            }
+
+            if (targetTile == TileMapTiles.InteractPlate) {
+                var tileAbove = grid.CellAt(playerGridPosition + Vector2.Up);
+                if (tileAbove.HasValue) {
+                    // TODO: refactor this
+                    if (WateringCanAmount< WateringCanMaximum && tileAbove.Value == TileMapTiles.WaterTankBottom) {
+                        return true;
+                    }
+                }
             }
 
             return false;
@@ -122,12 +146,31 @@ namespace LD50.Entities {
                 return;
             }
 
-            if (targetTile.IsPlowedFarmPlot() && !grid.IsFarmPlotWatered(playerGridPosition)) {
+            if (targetTile.IsPlowedFarmPlot() && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 grid.WaterFarmPlot(playerGridPosition);
+                WateringCanAmount--;
+                GD.Print("Watering Can Value: ", WateringCanAmount);
+                return;
             }
 
-            // TODO: if plot is watered (and has no plant), offer seed selection
+            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
+                // TODO: if plot is watered (and has no plant), offer seed selection
+                GD.Print("Seed!?");
+            }
+
+            if (targetTile == TileMapTiles.InteractPlate) {
+                var tileAbove = grid.CellAt(playerGridPosition + Vector2.Up);
+                if (tileAbove.HasValue) {
+                    // TODO: refactor this
+                    if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
+                        WateringCanAmount = WateringCanMaximum;
+                        GD.Print("Refilled Watering Can");
+                    }
+                }
+            }
+
             // TODO: if plot has plant and is fully grown, grab produce and reset field to base state
+
             // TODO: if plot has plant and is not watered (anymore) water again
         }
     }

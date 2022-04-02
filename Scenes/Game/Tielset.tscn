@@ -250,3 +250,21 @@ position = Vector2( 128, 80 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 128, 80, 16, 16 )
+
+[node name="WaterTankTop" type="Sprite" parent="."]
+position = Vector2( 0, 16 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 16, 16, 16 )
+
+[node name="WaterTankBottom" type="Sprite" parent="."]
+position = Vector2( 0, 32 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 32, 16, 16 )
+
+[node name="InteractPlate" type="Sprite" parent="."]
+position = Vector2( 0, 48 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 48, 16, 16 )

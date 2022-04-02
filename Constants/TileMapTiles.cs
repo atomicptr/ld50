@@ -41,6 +41,9 @@ namespace LD50.Constants {
         WateredPlowedFarmPlotSouthWest = 38,
         WateredPlowedFarmPlotSouthMid = 39,
         WateredPlowedFarmPlotSouthEast = 40,
+        WaterTankTop = 41,
+        WaterTankBottom = 42,
+        InteractPlate = 43,
     }
 
     public static class TileMapTilesExtension {
@@ -57,7 +60,7 @@ namespace LD50.Constants {
 
         public static bool IsFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
-            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.PlowedFarmPlotSouthEast;
+            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.WateredPlowedFarmPlotSouthEast;
         }
 
         public static bool IsUntouchedFarmPlot(this TileMapTiles tile) {
