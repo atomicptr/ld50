@@ -6,14 +6,14 @@
 
 [node name="Invisible Barrier" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 0, -32 )
+position = Vector2( 0, -16 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="Barrier" type="Sprite" parent="."]
 modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 32, -32 )
+position = Vector2( 16, -16 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -24,13 +24,67 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="Ground with Grass" type="Sprite" parent="."]
-position = Vector2( 32, 0 )
+position = Vector2( 16, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 16, 0, 16, 16 )
 
 [node name="Block" type="Sprite" parent="."]
-position = Vector2( 64, 0 )
+position = Vector2( 32, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 32, 0, 16, 16 )
+
+[node name="FarmplotNorthWest" type="Sprite" parent="."]
+position = Vector2( 48, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 0, 16, 16 )
+
+[node name="FarmplotNorthMid" type="Sprite" parent="."]
+position = Vector2( 64, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 16, 16 )
+
+[node name="FarmplotNorthEast" type="Sprite" parent="."]
+position = Vector2( 80, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 0, 16, 16 )
+
+[node name="FarmplotMidWest" type="Sprite" parent="."]
+position = Vector2( 48, 16 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 16, 16, 16 )
+
+[node name="FarmplotMidMid" type="Sprite" parent="."]
+position = Vector2( 64, 16 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 16, 16, 16 )
+
+[node name="FarmplotMidEast" type="Sprite" parent="."]
+position = Vector2( 80, 16 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 16, 16, 16 )
+
+[node name="FarmplotSouthWest" type="Sprite" parent="."]
+position = Vector2( 48, 32 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 32, 16, 16 )
+
+[node name="FarmplotSouthMid" type="Sprite" parent="."]
+position = Vector2( 64, 32 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 32, 16, 16 )
+
+[node name="FarmplotSouthEast" type="Sprite" parent="."]
+position = Vector2( 80, 32 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 32, 16, 16 )

@@ -7,6 +7,15 @@ namespace LD50.Constants {
         Ground = 2,
         GroundWithGrass = 3,
         Block = 4,
+        FarmplotNorthWest = 5,
+        FarmplotNorthMid = 6,
+        FarmplotNorthEast = 7,
+        FarmplotMidWest = 8,
+        FarmplotMidMid = 9,
+        FarmplotMidEast = 10,
+        FarmplotSouthWest = 11,
+        FarmplotSouthMid = 12,
+        FarmplotSouthEast = 13,
     }
 
     public static class TileMapTilesExtension {
@@ -19,6 +28,11 @@ namespace LD50.Constants {
                 default:
                     return false;
             }
+        }
+
+        public static bool IsFarmland(this TileMapTiles tile) {
+            var index = (int) tile;
+            return index >= (int) TileMapTiles.FarmplotNorthWest && index <= (int) TileMapTiles.FarmplotSouthEast;
         }
     }
 }
