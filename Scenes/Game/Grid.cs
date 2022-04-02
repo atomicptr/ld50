@@ -1,14 +1,12 @@
 using Godot;
 using Godot.Collections;
+using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
 
 namespace LD50.Scenes.Game {
     // TODO: find new name for this class... Game Manager?
     public class Grid : Node2D {
-        [Signal]
-        public delegate void TurnChanged(int turn);
-
         [GetNode("TileMap")] private TileMap tileMap;
 
         private Dictionary<Vector2, int> turnPlotWasWatered = new Dictionary<Vector2, int>();
@@ -85,7 +83,7 @@ namespace LD50.Scenes.Game {
 
             turn++;
             GD.Print("Turn: ", turn);
-            EmitSignal(nameof(TurnChanged), turn);
+            EventBus.Emit(nameof(EventBus.TurnChanged), turn);
         }
 
         private void progressWorld() {

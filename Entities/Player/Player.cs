@@ -1,22 +1,22 @@
 using Godot;
+using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
 using LD50.Scenes.Game;
 
 namespace LD50.Entities {
     public class Player : Node2D {
-        [Signal]
-        public delegate void MoneyValueChanged(int money);
-
-        [Signal]
-        public delegate void WateringCanAmountChanged(int amount);
-
         [Export]
         public int Money {
             get => money;
             set {
                 money = Mathf.Clamp(value, 0, int.MaxValue);
-                EmitSignal(nameof(MoneyValueChanged), money);
+
+                if (!IsInsideTree()) {
+                    return;
+                }
+
+                EventBus.Emit(nameof(EventBus.MoneyValueChanged), money);
             }
         }
 
@@ -27,7 +27,12 @@ namespace LD50.Entities {
             get => wateringCanAmount;
             set {
                 wateringCanAmount = Mathf.Clamp(value, 0, WateringCanMaximum);
-                EmitSignal(nameof(WateringCanAmountChanged), wateringCanAmount);
+
+                if (!IsInsideTree()) {
+                    return;
+                }
+
+                EventBus.Emit(nameof(EventBus.WateringCanAmountChanged), wateringCanAmount);
             }
         }
 
