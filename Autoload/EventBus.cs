@@ -34,6 +34,7 @@ namespace LD50.Autoload {
 
         public override void _Ready() {
             instance = this;
+            PauseMode = PauseModeEnum.Process;
         }
 
         public static void Emit(string signal, params object[] args) {

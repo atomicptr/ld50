@@ -24,6 +24,7 @@ namespace LD50.Autoload {
 
         public override void _Ready() {
             instance = this;
+            PauseMode = PauseModeEnum.Process;
         }
 
         public override void _UnhandledInput(InputEvent @event) {

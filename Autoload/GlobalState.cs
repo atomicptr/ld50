@@ -15,6 +15,7 @@ namespace LD50.Autoload {
 
         public override void _Ready() {
             instance = this;
+            PauseMode = PauseModeEnum.Process;
         }
     }
 }
