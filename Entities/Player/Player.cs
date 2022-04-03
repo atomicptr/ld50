@@ -130,7 +130,7 @@ namespace LD50.Entities {
                 return true;
             }
 
-            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
+            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition) && !grid.HasPlant(playerGridPosition)) {
                 actionPrompt.ShowPrompt(ActionPromptEvent.Seed);
                 return true;
             }
@@ -171,8 +171,9 @@ namespace LD50.Entities {
                 return;
             }
 
-            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition)) {
-                // TODO: if plot is watered (and has no plant), offer seed selection
+            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition) && !grid.HasPlant(playerGridPosition)) {
+                // TODO: offer multiple types of seeds
+                grid.PlaceSeed(playerGridPosition);
                 grid.NextTurn();
                 playAnimation(ANIMATION_INTERACT);
             }
@@ -189,9 +190,16 @@ namespace LD50.Entities {
                 }
             }
 
-            // TODO: if plot has plant and is fully grown, grab produce and reset field to base state
+            if (grid.HasPlant(playerGridPosition)) {
+                // TODO: get plant, if is fully grown, remove it and grab produce, delete plant
+            }
 
             // TODO: if plot has plant and is not watered (anymore) water again
+            if (grid.HasPlant(playerGridPosition) && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
+                grid.WaterFarmPlot(playerGridPosition);
+                WateringCanAmount--;
+                playAnimation(ANIMATION_INTERACT);
+            }
         }
 
         private void playAnimation(string animationName) {
