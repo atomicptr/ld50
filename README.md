@@ -10,6 +10,14 @@ TODO
 
 TODO
 
+## Software Used
+
+* **Operating System**: Fedora 35
+* **Game Engine**: Godot Game Engine 3.4
+* **Programming Language**: C#
+* **IDE**: JetBrains Rider
+* **Art**: Aseprite
+
 ## Attributions
 
 * [Godot Game Engine](https://godotengine.org)
