@@ -3,14 +3,14 @@ namespace LD50.Constants {
         private int index = 0;
 
         private readonly int[] amounts = new[] {
+            5000,
             10000,
             20000,
             40000,
-            80000,
+            800000,
             100000,
-            150000,
             200000,
-            500000,
+            400000,
             1000000,
         };
 

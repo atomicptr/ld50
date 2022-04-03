@@ -25,7 +25,7 @@ namespace LD50.Scenes.Game {
         private int currentDeadline = PAYMENT_THRESHOLD;
 
         private const int TURNS_PLOT_STAYS_WATERED = 300;
-        public const int PAYMENT_THRESHOLD = 200;
+        public const int PAYMENT_THRESHOLD = 300;
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
