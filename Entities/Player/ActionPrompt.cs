@@ -18,7 +18,7 @@ namespace LD50.Entities {
             animationPlayer.Play();
         }
 
-        public override void _UnhandledInput(InputEvent @event) {
+        public override void _Process(float delta) {
             buttonPrompt.RegionRect = InputDeviceHandler.InteractIcon.ToRect();
         }
 

@@ -17,6 +17,8 @@ namespace LD50.UserInterface.ShopMenu {
         [GetNode("Container/CenterContainer/VBoxContainer/MenuItems")]
         private VBoxContainer menuItems;
 
+        [GetNode("InputCooldown")] private Timer inputCooldown;
+
         private MenuItem selectedMenuItem = null;
 
         public override void _Ready() {
@@ -30,6 +32,10 @@ namespace LD50.UserInterface.ShopMenu {
                 return;
             }
 
+            if (! inputCooldown.IsStopped()) {
+                return;
+            }
+
             if (Input.IsActionJustPressed(InputActions.UI_UP)) {
                 selectPreviousMenuItem();
             } else if (Input.IsActionJustPressed(InputActions.UI_DOWN)) {
@@ -39,12 +45,6 @@ namespace LD50.UserInterface.ShopMenu {
                 EventBus.Emit(nameof(EventBus.ShopItemPurchased), selectedMenuItem.Identifier);
             } else if (Input.IsActionJustPressed(InputActions.UI_CANCEL)) {
                 CloseMenu();
-            }
-        }
-
-        public override void _UnhandledInput(InputEvent @event) {
-            if (!isOpen) {
-                return;
             }
 
             foreach (var item in menuItems.GetChildren().OfType<MenuItem>()) {
@@ -64,6 +64,8 @@ namespace LD50.UserInterface.ShopMenu {
 
             GetTree().Paused = isOpen;
             Visible = isOpen;
+
+            inputCooldown.Start();
         }
 
         public void CloseMenu() {

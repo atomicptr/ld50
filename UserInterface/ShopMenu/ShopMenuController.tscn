@@ -59,3 +59,7 @@ margin_bottom = 30.0
 Icon = 4
 Name = "Touch ma Hoe"
 Cost = 69
+
+[node name="InputCooldown" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

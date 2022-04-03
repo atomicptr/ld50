@@ -176,16 +176,14 @@ namespace LD50.Scenes.Game {
 
                 if (!nextPayment.HasValue) {
                     // you won the game! How the hell...
-                    // TODO: add screen, you won!
-                    GD.Print("You win!");
-                    GetTree().ReloadCurrentScene();
+                    GetTree().ChangeScene("res://Scenes/GameOver/YouWin.tscn");
+                    return;
                 }
 
                 if (player.Money - nextPayment.Value < 0) {
                     // you went into the red -> you lost
-                    // TODO: add screen, you lost
-                    GD.Print("You lost!!!");
-                    GetTree().ReloadCurrentScene();
+                    GetTree().ChangeScene("res://Scenes/GameOver/GameOver.tscn");
+                    return;
                 }
 
                 // player could pay the next payment, so continue...

@@ -12,21 +12,13 @@
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="PaymenThresholdtUI" type="NinePatchRect" parent="." instance=ExtResource( 5 )]
+[node name="PaymenThresholdtUI" parent="." instance=ExtResource( 5 )]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = 148.5
 margin_top = 5.0
 margin_right = 323.5
 margin_bottom = 24.0
-texture = ExtResource( 1 )
-region_rect = Rect2( 0, 32, 48, 48 )
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 script = ExtResource( 7 )
 
 [node name="Icon" type="NinePatchRect" parent="PaymenThresholdtUI"]
@@ -52,19 +44,11 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Next payment is due in 9999 turns"
 align = 2
 
-[node name="TurnCounterUI" type="NinePatchRect" parent="." instance=ExtResource( 5 )]
+[node name="TurnCounterUI" parent="." instance=ExtResource( 5 )]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 67.0
 margin_bottom = 24.0
-texture = ExtResource( 1 )
-region_rect = Rect2( 0, 32, 48, 48 )
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 script = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="TurnCounterUI"]
@@ -81,19 +65,11 @@ text = "Turn: 1"
 align = 1
 valign = 1
 
-[node name="MoneyUI" type="NinePatchRect" parent="." instance=ExtResource( 5 )]
+[node name="MoneyUI" parent="." instance=ExtResource( 5 )]
 margin_left = 5.0
 margin_top = 25.0
 margin_right = 67.0
 margin_bottom = 44.0
-texture = ExtResource( 1 )
-region_rect = Rect2( 0, 32, 48, 48 )
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 script = ExtResource( 6 )
 
 [node name="Icon" type="NinePatchRect" parent="MoneyUI"]
@@ -118,19 +94,11 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "?"
 align = 2
 
-[node name="WateringCanUI" type="NinePatchRect" parent="." instance=ExtResource( 5 )]
+[node name="WateringCanUI" parent="." instance=ExtResource( 5 )]
 margin_left = 5.0
 margin_top = 45.0
 margin_right = 67.0
 margin_bottom = 64.0
-texture = ExtResource( 1 )
-region_rect = Rect2( 0, 32, 48, 48 )
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 script = ExtResource( 3 )
 
 [node name="Icon" type="NinePatchRect" parent="WateringCanUI"]
@@ -155,19 +123,11 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "?"
 align = 2
 
-[node name="SeedUI" type="NinePatchRect" parent="." instance=ExtResource( 5 )]
+[node name="SeedUI" parent="." instance=ExtResource( 5 )]
 margin_left = 5.0
 margin_top = 65.0
 margin_right = 67.0
 margin_bottom = 84.0
-texture = ExtResource( 1 )
-region_rect = Rect2( 0, 32, 48, 48 )
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
 script = ExtResource( 2 )
 
 [node name="Icon" type="NinePatchRect" parent="SeedUI"]

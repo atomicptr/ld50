@@ -1,0 +1,117 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/m3x6_big.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/GameOver/ButtonPrompt.cs" type="Script" id=2]
+[ext_resource path="res://Assets/ui.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Pulsate"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Control/VBoxContainer/HBoxContainer/ButtonPrompt:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.7, 0.7 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Control/VBoxContainer/HBoxContainer/ButtonPrompt:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[node name="GameOver" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 100.0
+margin_right = 512.0
+margin_bottom = 126.0
+custom_fonts/font = ExtResource( 1 )
+text = "You went bankrupt :("
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 130.0
+margin_right = 512.0
+margin_bottom = 143.0
+text = "(Well... it was inevitable)"
+align = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 147.0
+margin_right = 512.0
+margin_bottom = 160.0
+text = "Thanks for playing :)!"
+align = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 164.0
+margin_right = 512.0
+margin_bottom = 164.0
+
+[node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 168.0
+margin_right = 512.0
+margin_bottom = 168.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 172.0
+margin_right = 512.0
+margin_bottom = 188.0
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_left = 204.0
+margin_top = 1.0
+margin_right = 287.0
+margin_bottom = 14.0
+text = "To play again press: "
+
+[node name="ButtonPrompt" type="NinePatchRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_left = 291.0
+margin_right = 307.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+rect_pivot_offset = Vector2( 8, 8 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 16 )
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/ButtonPrompt"]
+pause_mode = 2
+root_node = NodePath("../../../../../..")
+anims/Pulsate = SubResource( 1 )
+anims/RESET = SubResource( 2 )
