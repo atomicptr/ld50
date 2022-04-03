@@ -32,9 +32,10 @@ namespace LD50.Scenes.Game {
 
             // remove red modulate from barrier
             tileMap.TileSet.TileSetModulate((int) TileMapTiles.Barrier, Colors.White);
+        }
 
-            // propagate first turn
-            EventBus.Emit(nameof(EventBus.TurnChanged), turn);
+        public override void _Process(float delta) {
+            EventBus.InitializeEvent(nameof(EventBus.TurnChanged), turn);
         }
 
         public Vector2 MapToWorld(Vector2 coords) {

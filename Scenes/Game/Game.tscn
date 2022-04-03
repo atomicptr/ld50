@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Game/GameManager.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Game/Tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UserInterface/ShopMenu/ShopMenuController.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UserInterface/HUD/HUD.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node"]
 
@@ -22,3 +24,10 @@ tile_data = PoolIntArray( -1179671, 2, 0, -1179670, 2, 0, -1179669, 2, 0, -11796
 position = Vector2( 128, 80 )
 
 [node name="Plants" type="YSort" parent="GameManager/YSort"]
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="ShopMenuController" parent="UserInterface" instance=ExtResource( 4 )]
+
+[node name="HUD" parent="UserInterface" instance=ExtResource( 5 )]

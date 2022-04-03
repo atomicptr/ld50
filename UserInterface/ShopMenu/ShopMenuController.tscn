@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UserInterface/Container/Container.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UserInterface/ShopMenu/ShopMenuController.cs" type="Script" id=3]
+[ext_resource path="res://UserInterface/ShopMenu/MenuItem.tscn" type="PackedScene" id=4]
+
+[node name="ShopMenuController" type="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="Container" parent="." instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -134.5
+margin_top = -107.5
+margin_right = 134.5
+margin_bottom = 107.5
+
+[node name="CenterContainer" type="CenterContainer" parent="Container"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/CenterContainer"]
+margin_left = 68.0
+margin_top = 82.0
+margin_right = 200.0
+margin_bottom = 133.0
+
+[node name="Title" type="Label" parent="Container/CenterContainer/VBoxContainer"]
+margin_right = 132.0
+margin_bottom = 13.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Literally only Shop in town"
+align = 1
+
+[node name="Spacer" type="Control" parent="Container/CenterContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 132.0
+margin_bottom = 17.0
+
+[node name="MenuItems" type="VBoxContainer" parent="Container/CenterContainer/VBoxContainer"]
+margin_top = 21.0
+margin_right = 132.0
+margin_bottom = 51.0
+
+[node name="MenuItem" parent="Container/CenterContainer/VBoxContainer/MenuItems" instance=ExtResource( 4 )]
+IsSelected = true
+Icon = 7
+Name = "Give me Money"
+Cost = 500
+
+[node name="MenuItem2" parent="Container/CenterContainer/VBoxContainer/MenuItems" instance=ExtResource( 4 )]
+margin_top = 17.0
+margin_bottom = 30.0
+Icon = 4
+Name = "Touch ma Hoe"
+Cost = 69

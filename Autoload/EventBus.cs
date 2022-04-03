@@ -1,4 +1,6 @@
 using Godot;
+using Godot.Collections;
+using LD50.UserInterface.ShopMenu;
 
 namespace LD50.Autoload {
     public class EventBus : Node {
@@ -17,7 +19,14 @@ namespace LD50.Autoload {
         [Signal]
         public delegate void NextPaymentThresholdAnnounced(int nextThreshold);
 
+        [Signal]
+        public delegate void OpenShopMenu();
+
+        [Signal]
+        public delegate void ShopItemPurchased(MenuItemEntryIdentifier identifier);
+
         private static EventBus instance;
+        private readonly Dictionary<string, bool> initializedEvents = new Dictionary<string, bool>();
 
         public static EventBus Instance {
             get => instance;
@@ -33,6 +42,15 @@ namespace LD50.Autoload {
 
         public static void ConnectEvent(string signal, Object target, string methodName) {
             instance.Connect(signal, target, methodName);
+        }
+
+        // This serves to initialize an initial value at a later-ish state when all consumers are setup
+        public static void InitializeEvent(string eventName, params object[] values) {
+            if (instance.initializedEvents.ContainsKey(eventName)) {
+                return;
+            }
+            Emit(eventName, values);
+            instance.initializedEvents[eventName] = true;
         }
     }
 }

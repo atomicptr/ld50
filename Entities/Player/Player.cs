@@ -1,9 +1,12 @@
+using System;
 using Godot;
+using System.Collections.Generic;
 using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
 using LD50.Scenes.Game;
 using LD50.UserInterface;
+using LD50.UserInterface.ShopMenu;
 
 namespace LD50.Entities {
     public class Player : Node2D {
@@ -72,9 +75,15 @@ namespace LD50.Entities {
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
+
+            EventBus.ConnectEvent(nameof(EventBus.ShopItemPurchased), this, nameof(onItemPurchased));
         }
 
         public override void _Process(float delta) {
+            EventBus.InitializeEvent(nameof(EventBus.MoneyValueChanged), money);
+            EventBus.InitializeEvent(nameof(EventBus.WateringCanAmountChanged), wateringCanAmount);
+            EventBus.InitializeEvent(nameof(EventBus.SeedAmountChanged), seedAmount);
+
             playerGridPosition = gameManager.WorldToMap(Position);
             var direction = determineDirection();
 
@@ -236,7 +245,8 @@ namespace LD50.Entities {
 
                     // guess this works only for shops...
                     if (tileAbove.Value == TileMapTiles.HouseFrontDoor) {
-                        GD.Print("SHOP!");
+                        populateShopMenu();
+                        EventBus.Emit(nameof(EventBus.OpenShopMenu));
                         gameManager.NextTurn();
                         playAnimation(ANIMATION_INTERACT);
                     }
@@ -268,6 +278,40 @@ namespace LD50.Entities {
             }
             animationPlayer.CurrentAnimation = animationName;
             animationPlayer.Play();
+        }
+
+        private void populateShopMenu() {
+            GlobalState.Instance.ShopItems = new Dictionary<MenuItemEntryIdentifier, MenuItemEntry>() {
+                {
+                    MenuItemEntryIdentifier.Bu5SeedAmount5,
+                    new MenuItemEntry(MenuItemEntryIdentifier.Bu5SeedAmount5, Icon.ToolSeeds, "Buy 05x Seeds", 500)
+                },
+                {
+                    MenuItemEntryIdentifier.Bu5SeedAmount10,
+                    new MenuItemEntry(MenuItemEntryIdentifier.Bu5SeedAmount10, Icon.ToolSeeds, "Buy 10x Seeds", 900)
+                },
+            };
+        }
+
+        private void onItemPurchased(MenuItemEntryIdentifier identifier) {
+            var item = GlobalState.Instance.ShopItems[identifier];
+
+            if (item.Cost > Money) {
+                return; // TODO: somehow show user this failed...
+            }
+
+            Money -= item.Cost;
+
+            switch (identifier) {
+                case MenuItemEntryIdentifier.Bu5SeedAmount5:
+                    SeedAmount += 5;
+                    break;
+                case MenuItemEntryIdentifier.Bu5SeedAmount10:
+                    SeedAmount += 10;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(identifier), identifier, null);
+            }
         }
     }
 }

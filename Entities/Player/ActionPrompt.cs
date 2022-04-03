@@ -31,7 +31,7 @@ namespace LD50.Entities {
                 showKeyboardPrompt = true;
             } else if (@event is InputEventJoypadButton || @event is InputEventJoypadMotion) {
                 showKeyboardPrompt = false;
-                controllerType = determineControllerTypeByName(
+                controllerType = DetermineControllerTypeByName(
                     Input.GetJoyName((int) Input.GetConnectedJoypads()[@event.Device])
                 );
             }
@@ -51,7 +51,7 @@ namespace LD50.Entities {
             }
         }
 
-        private ControllerType determineControllerTypeByName(string name) {
+        public static ControllerType DetermineControllerTypeByName(string name) {
             switch (name.ToLower()) {
                 case "xbox one controller":
                 case "xinput gamepad":
