@@ -6,6 +6,8 @@ My game submission for the Ludum Dare #50 Compo "Delay the inevitable".
 
 You're a farming bunny deep in the red, hop around, farm as much as you can and try to delay your inevitable bankruptcy!
 
+![](misc/game.gif)
+
 ## Play!
 
 [Click here](https://ld50.atomicptr.de)
