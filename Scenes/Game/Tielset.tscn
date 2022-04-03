@@ -268,3 +268,105 @@ position = Vector2( 0, 48 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 48, 16, 16 )
+
+[node name="HouseRoofTopLeft" type="Sprite" parent="."]
+position = Vector2( 48, 96 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 96, 16, 16 )
+
+[node name="HouseRoofTopMid" type="Sprite" parent="."]
+position = Vector2( 64, 96 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 96, 16, 16 )
+
+[node name="HouseRoofTopRight" type="Sprite" parent="."]
+position = Vector2( 80, 96 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 96, 16, 16 )
+
+[node name="HouseRoofMidLeft" type="Sprite" parent="."]
+position = Vector2( 48, 112 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 112, 16, 16 )
+
+[node name="HouseRoofMidMid" type="Sprite" parent="."]
+position = Vector2( 64, 112 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 112, 16, 16 )
+
+[node name="HouseRooMidRight" type="Sprite" parent="."]
+position = Vector2( 80, 112 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 112, 16, 16 )
+
+[node name="HouseRoofBottomLeft" type="Sprite" parent="."]
+position = Vector2( 48, 128 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 128, 16, 16 )
+
+[node name="HouseRoofBottomMid" type="Sprite" parent="."]
+position = Vector2( 64, 128 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 128, 16, 16 )
+
+[node name="HouseRoofBottomRight" type="Sprite" parent="."]
+position = Vector2( 80, 128 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 128, 16, 16 )
+
+[node name="HouseFrontTopLeft" type="Sprite" parent="."]
+position = Vector2( 48, 144 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 144, 16, 16 )
+
+[node name="HouseFrontTopMid" type="Sprite" parent="."]
+position = Vector2( 64, 144 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 144, 16, 16 )
+
+[node name="HouseFrontTopRight" type="Sprite" parent="."]
+position = Vector2( 80, 144 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 144, 16, 16 )
+
+[node name="HouseFrontBottomLeft" type="Sprite" parent="."]
+position = Vector2( 48, 160 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 160, 16, 16 )
+
+[node name="HouseFrontBottomMid" type="Sprite" parent="."]
+position = Vector2( 64, 160 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 160, 16, 16 )
+
+[node name="HouseFrontBottomRight" type="Sprite" parent="."]
+position = Vector2( 80, 160 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 160, 16, 16 )
+
+[node name="HouseFrontShopSign" type="Sprite" parent="."]
+position = Vector2( 96, 144 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 96, 144, 16, 16 )
+
+[node name="HouseFrontDoor" type="Sprite" parent="."]
+position = Vector2( 96, 160 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 96, 160, 16, 16 )

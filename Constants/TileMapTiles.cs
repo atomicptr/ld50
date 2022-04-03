@@ -44,6 +44,23 @@ namespace LD50.Constants {
         WaterTankTop = 41,
         WaterTankBottom = 42,
         InteractPlate = 43,
+        HouseRoofTopLeft = 44,
+        HouseRoofTopMid = 45,
+        HouseRoofTopRight = 46,
+        HouseRoofMidLeft = 47,
+        HouseRoofMidMid = 48,
+        HouseRooMidRight = 49,
+        HouseRoofBottomLeft = 50,
+        HouseRoofBottomMid = 51,
+        HouseRoofBottomRight = 52,
+        HouseFrontTopLeft = 53,
+        HouseFrontTopMid = 54,
+        HouseFrontTopRight = 55,
+        HouseFrontBottomLeft = 56,
+        HouseFrontBottomMid = 57,
+        HouseFrontBottomRight = 58,
+        HouseFrontShopSign = 59,
+        HouseFrontDoor = 60,
     }
 
     public static class TileMapTilesExtension {
@@ -54,6 +71,23 @@ namespace LD50.Constants {
                 case TileMapTiles.Block:
                 case TileMapTiles.WaterTankTop:
                 case TileMapTiles.WaterTankBottom:
+                case TileMapTiles.HouseRoofTopLeft:
+                case TileMapTiles.HouseRoofTopMid:
+                case TileMapTiles.HouseRoofTopRight:
+                case TileMapTiles.HouseRoofMidLeft:
+                case TileMapTiles.HouseRoofMidMid:
+                case TileMapTiles.HouseRooMidRight:
+                case TileMapTiles.HouseRoofBottomLeft:
+                case TileMapTiles.HouseRoofBottomMid:
+                case TileMapTiles.HouseRoofBottomRight:
+                case TileMapTiles.HouseFrontTopLeft:
+                case TileMapTiles.HouseFrontTopMid:
+                case TileMapTiles.HouseFrontTopRight:
+                case TileMapTiles.HouseFrontBottomLeft:
+                case TileMapTiles.HouseFrontBottomMid:
+                case TileMapTiles.HouseFrontBottomRight:
+                case TileMapTiles.HouseFrontShopSign:
+                case TileMapTiles.HouseFrontDoor:
                     return true;
                 default:
                     return false;

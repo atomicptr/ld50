@@ -14,6 +14,10 @@ namespace LD50.Constants {
             1000000,
         };
 
+        public int Stage {
+            get => index;
+        }
+
         public int? Next {
             get {
                 // you won the game?
@@ -25,7 +29,7 @@ namespace LD50.Constants {
             }
         }
 
-        public void AdvanceToNextAmount() {
+        public void AdvanceToNextStage() {
             index++;
         }
     }

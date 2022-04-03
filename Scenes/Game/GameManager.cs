@@ -189,7 +189,7 @@ namespace LD50.Scenes.Game {
 
                 currentDeadline += PAYMENT_THRESHOLD;
                 EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline);
-                loanProcessor.AdvanceToNextAmount();
+                loanProcessor.AdvanceToNextStage();
             }
         }
     }

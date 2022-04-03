@@ -14,6 +14,7 @@ namespace LD50.Constants {
         ToolWater,
         Money,
         Skull,
+        SpeechBubble,
     }
 
     public static class UIIconsExtension {
@@ -37,6 +38,8 @@ namespace LD50.Constants {
                     return new Rect2(64, 16, 16, 16);
                 case Icon.Skull:
                     return new Rect2(80, 16, 16, 16);
+                case Icon.SpeechBubble:
+                    return new Rect2(96, 16, 16, 16);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(icon), icon, null);
             }

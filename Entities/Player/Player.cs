@@ -174,6 +174,12 @@ namespace LD50.Entities {
                         actionPrompt.ShowPrompt(Icon.ToolWater);
                         return true;
                     }
+
+                    // yikes... this only supports shops for now i guess?
+                    if (tileAbove.Value == TileMapTiles.HouseFrontDoor) {
+                        actionPrompt.ShowPrompt(Icon.SpeechBubble);
+                        return true;
+                    }
                 }
             }
 
@@ -224,6 +230,13 @@ namespace LD50.Entities {
                     if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
                         floatingTextManager.Spawn(Icon.ToolWateringCan, WateringCanMaximum - WateringCanAmount);
                         WateringCanAmount = WateringCanMaximum;
+                        gameManager.NextTurn();
+                        playAnimation(ANIMATION_INTERACT);
+                    }
+
+                    // guess this works only for shops...
+                    if (tileAbove.Value == TileMapTiles.HouseFrontDoor) {
+                        GD.Print("SHOP!");
                         gameManager.NextTurn();
                         playAnimation(ANIMATION_INTERACT);
                     }
