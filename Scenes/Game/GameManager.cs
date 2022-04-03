@@ -30,6 +30,9 @@ namespace LD50.Scenes.Game {
         public override void _Ready() {
             GetNodeAttribute.Load(this);
 
+            // remove red modulate from barrier
+            tileMap.TileSet.TileSetModulate((int) TileMapTiles.Barrier, Colors.White);
+
             // propagate first turn
             EventBus.Emit(nameof(EventBus.TurnChanged), turn);
         }
