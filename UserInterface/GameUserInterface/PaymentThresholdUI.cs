@@ -13,7 +13,7 @@ namespace LD50.UserInterface.GameUserInterface {
         }
 
         private void onTurnChanged(int turn) {
-            var dueInTurns = Grid.PAYMENT_THRESHOLD - turn;
+            var dueInTurns = GameManager.PAYMENT_THRESHOLD - turn;
             label.Text = $"Next payment is due in {dueInTurns} turns.";
         }
     }

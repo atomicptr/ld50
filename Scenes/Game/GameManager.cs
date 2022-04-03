@@ -8,8 +8,7 @@ using LD50.Constants;
 using LD50.Entities.Plant;
 
 namespace LD50.Scenes.Game {
-    // TODO: find new name for this class... Game Manager?
-    public class Grid : Node2D {
+    public class GameManager : Node2D {
         [GetNode("TileMap")] private TileMap tileMap;
         [GetNode("YSort/Plants")] private YSort plants;
 

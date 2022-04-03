@@ -59,7 +59,7 @@ namespace LD50.Entities {
 
         public int WateringCanMaximum = 5;
 
-        [GetNode("/root/Game/Grid")] private Grid grid;
+        [GetNode("/root/Game/GameManager")] private GameManager gameManager;
         [GetNode("MoveCooldown")] private Timer moveCooldown;
         [GetNode("AnimationPlayer")] private AnimationPlayer animationPlayer;
         [GetNode("ActionPrompt")] private ActionPrompt actionPrompt;
@@ -75,7 +75,7 @@ namespace LD50.Entities {
         }
 
         public override void _Process(float delta) {
-            playerGridPosition = grid.WorldToMap(Position);
+            playerGridPosition = gameManager.WorldToMap(Position);
             var direction = determineDirection();
 
             actionPrompt.Hide();
@@ -94,13 +94,13 @@ namespace LD50.Entities {
 
             var targetPos = playerGridPosition + direction;
 
-            if (!grid.IsVacant(targetPos)) {
+            if (!gameManager.IsVacant(targetPos)) {
                 return;
             }
 
-            Position = grid.MapToWorld(playerGridPosition + direction);
+            Position = gameManager.MapToWorld(playerGridPosition + direction);
 
-            grid.NextTurn();
+            gameManager.NextTurn();
 
             playAnimation(ANIMATION_MOVE);
             moveCooldown.Start();
@@ -125,7 +125,7 @@ namespace LD50.Entities {
         }
 
         private bool canInteract() {
-            var currentTile = grid.CellAt(playerGridPosition);
+            var currentTile = gameManager.CellAt(playerGridPosition);
 
             if (!currentTile.HasValue) {
                 return false;
@@ -140,7 +140,7 @@ namespace LD50.Entities {
 
             if (
                 targetTile.IsPlowedFarmPlot() &&
-                !grid.IsFarmPlotWatered(playerGridPosition) &&
+                !gameManager.IsFarmPlotWatered(playerGridPosition) &&
                 WateringCanAmount > 0
             ) {
                 actionPrompt.ShowPrompt(Icon.ToolWateringCan);
@@ -149,16 +149,16 @@ namespace LD50.Entities {
 
             if (
                 targetTile.IsFarmPlot() &&
-                grid.IsFarmPlotWatered(playerGridPosition) &&
-                !grid.HasPlant(playerGridPosition) &&
+                gameManager.IsFarmPlotWatered(playerGridPosition) &&
+                !gameManager.HasPlant(playerGridPosition) &&
                 SeedAmount > 0
             ) {
                 actionPrompt.ShowPrompt(Icon.Money);
                 return true;
             }
 
-            if (targetTile.IsFarmPlot() && grid.HasPlant(playerGridPosition)) {
-                var plant = grid.PlantAt(playerGridPosition);
+            if (targetTile.IsFarmPlot() && gameManager.HasPlant(playerGridPosition)) {
+                var plant = gameManager.PlantAt(playerGridPosition);
 
                 if (plant.IsFullyGrown()) {
                     actionPrompt.ShowPrompt(Icon.Money);
@@ -167,7 +167,7 @@ namespace LD50.Entities {
             }
 
             if (targetTile == TileMapTiles.InteractPlate) {
-                var tileAbove = grid.CellAt(playerGridPosition + Vector2.Up);
+                var tileAbove = gameManager.CellAt(playerGridPosition + Vector2.Up);
                 if (tileAbove.HasValue) {
                     // TODO: refactor this
                     if (WateringCanAmount< WateringCanMaximum && tileAbove.Value == TileMapTiles.WaterTankBottom) {
@@ -181,7 +181,7 @@ namespace LD50.Entities {
         }
 
         private void interact() {
-            var currentTile = grid.CellAt(playerGridPosition);
+            var currentTile = gameManager.CellAt(playerGridPosition);
 
             if (!currentTile.HasValue) {
                 return;
@@ -190,13 +190,13 @@ namespace LD50.Entities {
             var targetTile = currentTile.Value;
 
             if (targetTile.IsUntouchedFarmPlot()) {
-                grid.PlowFarmPlot(playerGridPosition);
+                gameManager.PlowFarmPlot(playerGridPosition);
                 playAnimation(ANIMATION_INTERACT);
                 return;
             }
 
-            if (targetTile.IsPlowedFarmPlot() && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
-                grid.WaterFarmPlot(playerGridPosition);
+            if (targetTile.IsPlowedFarmPlot() && !gameManager.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
+                gameManager.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
                 floatingTextManager.Spawn(Icon.ToolWateringCan, -1);
                 playAnimation(ANIMATION_INTERACT);
@@ -205,44 +205,44 @@ namespace LD50.Entities {
 
             if (
                 targetTile.IsFarmPlot() &&
-                grid.IsFarmPlotWatered(playerGridPosition) &&
-                !grid.HasPlant(playerGridPosition) &&
+                gameManager.IsFarmPlotWatered(playerGridPosition) &&
+                !gameManager.HasPlant(playerGridPosition) &&
                 SeedAmount > 0
             ) {
                 // TODO: offer multiple types of seeds
-                grid.PlaceSeed(playerGridPosition);
+                gameManager.PlaceSeed(playerGridPosition);
                 SeedAmount--;
                 floatingTextManager.Spawn(Icon.ToolSeeds, -1);
-                grid.NextTurn();
+                gameManager.NextTurn();
                 playAnimation(ANIMATION_INTERACT);
             }
 
             if (targetTile == TileMapTiles.InteractPlate) {
-                var tileAbove = grid.CellAt(playerGridPosition + Vector2.Up);
+                var tileAbove = gameManager.CellAt(playerGridPosition + Vector2.Up);
                 if (tileAbove.HasValue) {
                     // TODO: refactor this
                     if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
                         floatingTextManager.Spawn(Icon.ToolWateringCan, WateringCanMaximum - WateringCanAmount);
                         WateringCanAmount = WateringCanMaximum;
-                        grid.NextTurn();
+                        gameManager.NextTurn();
                         playAnimation(ANIMATION_INTERACT);
                     }
                 }
             }
 
-            if (grid.HasPlant(playerGridPosition)) {
-                var plant = grid.PlantAt(playerGridPosition);
+            if (gameManager.HasPlant(playerGridPosition)) {
+                var plant = gameManager.PlantAt(playerGridPosition);
 
                 if (plant.IsFullyGrown()) {
                     // TODO: maybe only put it inventory and have to turn it in somewhere?
                     Money += plant.ProduceValue;
                     floatingTextManager.Spawn(Icon.Money, plant.ProduceValue);
-                    grid.RemovePlant(playerGridPosition);
+                    gameManager.RemovePlant(playerGridPosition);
                 }
             }
 
-            if (grid.HasPlant(playerGridPosition) && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
-                grid.WaterFarmPlot(playerGridPosition);
+            if (gameManager.HasPlant(playerGridPosition) && !gameManager.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
+                gameManager.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
                 floatingTextManager.Spawn(Icon.ToolWateringCan, -1);
                 playAnimation(ANIMATION_INTERACT);
