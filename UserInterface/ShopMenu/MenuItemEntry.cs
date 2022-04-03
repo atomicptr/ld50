@@ -7,6 +7,9 @@ namespace LD50.UserInterface.ShopMenu {
         UpgradeWateringCanSize1,
         UpgradeWateringCanSize2,
         UpgradeWateringCanSize3,
+        FarmPlotUpgrade1,
+        FarmPlotUpgrade2,
+        FarmPlotUpgrade3,
     }
 
     public readonly struct MenuItemEntry {

@@ -3,5 +3,8 @@ namespace LD50.Entities {
         WateringCanSizeIncreaseTo10,
         WateringCanSizeIncreaseTo20,
         WateringCanSizeIncreaseTo30,
+        FarmPlotUpgrade1,
+        FarmPlotUpgrade2,
+        FarmPlotUpgrade3,
     }
 }

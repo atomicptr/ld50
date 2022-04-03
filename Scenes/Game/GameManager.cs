@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -8,7 +7,6 @@ using LD50.Common;
 using LD50.Constants;
 using LD50.Entities;
 using LD50.Entities.Plant;
-using LD50.UserInterface.ShopMenu;
 
 namespace LD50.Scenes.Game {
     public class GameManager : Node2D {
@@ -199,7 +197,74 @@ namespace LD50.Scenes.Game {
         }
 
         private void onUpgradeObtained(PlayerUpgrade upgrade) {
-            // TODO: handle GameManager specific upgrades
+            switch (upgrade) {
+                case PlayerUpgrade.FarmPlotUpgrade1:
+                    increaseFarmPlot(6);
+                    break;
+                case PlayerUpgrade.FarmPlotUpgrade2:
+                    increaseFarmPlot(9);
+                    break;
+                case PlayerUpgrade.FarmPlotUpgrade3:
+                    increaseFarmPlot(12);
+                    break;
+            }
+        }
+
+        private void increaseFarmPlot(int size) {
+            var farmPlotStart = Vector2.Zero;
+
+            // find the start of the farm plot
+            foreach (var cellv in tileMap.GetUsedCells().OfType<Vector2>()) {
+                var cellId = tileMap.GetCellv(cellv);
+
+                if (cellId == (int) TileMapTiles.FarmPlotNorthWest) {
+                    farmPlotStart = cellv;
+                    break;
+                }
+            }
+
+            for (var x = 0; x < size; x++) {
+                for (var y = 0; y < size; y++) {
+                    var cellv = farmPlotStart + new Vector2(x, y);
+
+                    var currentTile = (TileMapTiles) tileMap.GetCellv(cellv);
+
+                    var isTopRow = y == 0;
+                    var isBottomRow = y == size - 1;
+                    var isLeftEdgeColumn = x == 0;
+                    var isRightEdgeColumn = x == size - 1;
+
+                    var tile = TileMapTiles.FarmPlotMidMid;
+
+                    if (isTopRow && isLeftEdgeColumn) {
+                        tile = TileMapTiles.FarmPlotNorthWest;
+                    } else if (isTopRow && isRightEdgeColumn) {
+                        tile = TileMapTiles.FarmPlotNorthEast;
+                    } else if (isTopRow) {
+                        tile = TileMapTiles.FarmPlotNorthMid;
+                    } else if (isBottomRow && isLeftEdgeColumn) {
+                        tile = TileMapTiles.FarmPlotSouthWest;
+                    }  else if (isBottomRow && isRightEdgeColumn) {
+                        tile = TileMapTiles.FarmPlotSouthEast;
+                    } else if (isBottomRow) {
+                        tile = TileMapTiles.FarmPlotSouthMid;
+                    } else if (isLeftEdgeColumn) {
+                        tile = TileMapTiles.FarmPlotMidWest;
+                    } else if (isRightEdgeColumn) {
+                        tile = TileMapTiles.FarmPlotMidEast;
+                    }
+
+                    if (currentTile.IsPlowedFarmPlot()) {
+                        tile = tile.ToPlowedFarmPlot();
+                    }
+
+                    if (IsFarmPlotWatered(cellv)) {
+                        tile = tile.ToWateredFarmPlot();
+                    }
+
+                    tileMap.SetCellv(cellv, (int) tile);
+                }
+            }
         }
     }
 }

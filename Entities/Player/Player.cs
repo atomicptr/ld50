@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using LD50.Autoload;
@@ -327,6 +328,40 @@ namespace LD50.Entities {
                 );
             }
 
+            if (!playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade1)) {
+                shopItems[MenuItemEntryIdentifier.FarmPlotUpgrade1] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.FarmPlotUpgrade1,
+                    Icon.ToolHoe,
+                    "Increase farm plot size",
+                    3000
+                );
+            }
+
+            if (
+                playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade1) &&
+                !playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade2)
+            ) {
+                shopItems[MenuItemEntryIdentifier.FarmPlotUpgrade2] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.FarmPlotUpgrade2,
+                    Icon.ToolHoe,
+                    "Increase farm plot size",
+                    5000
+                );
+            }
+
+            if (
+                playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade1) &&
+                playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade2) &&
+                !playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade3)
+            ) {
+                shopItems[MenuItemEntryIdentifier.FarmPlotUpgrade2] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.FarmPlotUpgrade2,
+                    Icon.ToolHoe,
+                    "Increase farm plot size",
+                    10000
+                );
+            }
+
             GlobalState.Instance.ShopItems = shopItems;
         }
 
@@ -361,6 +396,17 @@ namespace LD50.Entities {
                     WateringCanMaximum = 30;
                     WateringCanAmount = WateringCanMaximum;
                     break;
+                case MenuItemEntryIdentifier.FarmPlotUpgrade1:
+                    addUpgrade(PlayerUpgrade.FarmPlotUpgrade1);
+                    break;
+                case MenuItemEntryIdentifier.FarmPlotUpgrade2:
+                    addUpgrade(PlayerUpgrade.FarmPlotUpgrade2);
+                    break;
+                case MenuItemEntryIdentifier.FarmPlotUpgrade3:
+                    addUpgrade(PlayerUpgrade.FarmPlotUpgrade3);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(identifier), identifier, null);
             }
 
             populateShopMenu();
