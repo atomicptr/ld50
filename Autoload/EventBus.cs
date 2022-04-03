@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using LD50.Entities;
 using LD50.UserInterface.ShopMenu;
 
 namespace LD50.Autoload {
@@ -24,6 +25,9 @@ namespace LD50.Autoload {
 
         [Signal]
         public delegate void ShopItemPurchased(MenuItemEntryIdentifier identifier);
+
+        [Signal]
+        public delegate void UpgradeObtained(PlayerUpgrade upgrade);
 
         private static EventBus instance;
         private readonly Dictionary<string, bool> initializedEvents = new Dictionary<string, bool>();

@@ -20,6 +20,7 @@ namespace LD50.UserInterface.ShopMenu {
         [GetNode("InputCooldown")] private Timer inputCooldown;
 
         private MenuItem selectedMenuItem = null;
+        private MenuItemEntryIdentifier? lastIdentifier = null;
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
@@ -57,8 +58,18 @@ namespace LD50.UserInterface.ShopMenu {
         }
 
         public void OpenMenu() {
+            // this was re-opened... lets store the current identifier
+            if (isOpen) {
+                lastIdentifier = selectedMenuItem.Identifier;
+            }
+
             destroyMenuItems();
             createMenuItems(GlobalState.Instance.ShopItems);
+
+            if (lastIdentifier.HasValue) {
+                selectMenuItemByIdentifier(lastIdentifier.Value);
+                lastIdentifier = null;
+            }
 
             isOpen = true;
 
@@ -69,6 +80,8 @@ namespace LD50.UserInterface.ShopMenu {
         }
 
         public void CloseMenu() {
+            selectedMenuItem = null;
+
             destroyMenuItems();
             isOpen = false;
 
@@ -97,7 +110,7 @@ namespace LD50.UserInterface.ShopMenu {
 
         private void destroyMenuItems() {
             foreach (var child in menuItems.GetChildren().OfType<Node>()) {
-                child.QueueFree();
+                child.Free();
             }
         }
 
@@ -149,6 +162,19 @@ namespace LD50.UserInterface.ShopMenu {
             previous.IsSelected = true;
 
             selectedMenuItem = previous;
+        }
+
+        private void selectMenuItemByIdentifier(MenuItemEntryIdentifier identifier) {
+            foreach (var menuItem in menuItems.GetChildren().OfType<MenuItem>()) {
+                if (menuItem.Identifier != identifier) {
+                    continue;
+                }
+
+                selectedMenuItem.IsSelected = false;
+                menuItem.IsSelected = true;
+                selectedMenuItem = menuItem;
+                return;
+            }
         }
     }
 }

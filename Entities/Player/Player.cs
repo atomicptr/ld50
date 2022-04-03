@@ -1,6 +1,5 @@
-using System;
-using Godot;
 using System.Collections.Generic;
+using Godot;
 using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
@@ -69,6 +68,8 @@ namespace LD50.Entities {
         [GetNode("FloatingTextManager")] private FloatingTextManager floatingTextManager;
 
         private Vector2 playerGridPosition = Vector2.Zero;
+
+        private List<PlayerUpgrade> playerUpgrades = new List<PlayerUpgrade>();
 
         private const string ANIMATION_MOVE = "Move";
         private const string ANIMATION_INTERACT = "Interact";
@@ -281,16 +282,52 @@ namespace LD50.Entities {
         }
 
         private void populateShopMenu() {
-            GlobalState.Instance.ShopItems = new Dictionary<MenuItemEntryIdentifier, MenuItemEntry>() {
+            var shopItems = new Dictionary<MenuItemEntryIdentifier, MenuItemEntry>() {
                 {
-                    MenuItemEntryIdentifier.Bu5SeedAmount5,
-                    new MenuItemEntry(MenuItemEntryIdentifier.Bu5SeedAmount5, Icon.ToolSeeds, "Buy 05x Seeds", 500)
+                    MenuItemEntryIdentifier.BuySeedAmount5,
+                    new MenuItemEntry(MenuItemEntryIdentifier.BuySeedAmount5, Icon.ToolSeeds, "Buy 05x Seeds", 500)
                 },
                 {
-                    MenuItemEntryIdentifier.Bu5SeedAmount10,
-                    new MenuItemEntry(MenuItemEntryIdentifier.Bu5SeedAmount10, Icon.ToolSeeds, "Buy 10x Seeds", 900)
+                    MenuItemEntryIdentifier.BuySeedAmount10,
+                    new MenuItemEntry(MenuItemEntryIdentifier.BuySeedAmount10, Icon.ToolSeeds, "Buy 10x Seeds", 900)
                 },
             };
+
+            if (!playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo10)) {
+                shopItems[MenuItemEntryIdentifier.UpgradeWateringCanSize1] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.UpgradeWateringCanSize1,
+                    Icon.ToolWateringCan,
+                    "Upgrade capacity to 10",
+                    1000
+                );
+            }
+
+            if (
+                playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo10) &&
+                !playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo20)
+            ) {
+                shopItems[MenuItemEntryIdentifier.UpgradeWateringCanSize2] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.UpgradeWateringCanSize2,
+                    Icon.ToolWateringCan,
+                    "Upgrade capacity to 20",
+                    2000
+                );
+            }
+
+            if (
+                playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo10) &&
+                playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo20) &&
+                !playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo30)
+            ) {
+                shopItems[MenuItemEntryIdentifier.UpgradeWateringCanSize3] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.UpgradeWateringCanSize3,
+                    Icon.ToolWateringCan,
+                    "Upgrade capacity to 30",
+                    3000
+                );
+            }
+
+            GlobalState.Instance.ShopItems = shopItems;
         }
 
         private void onItemPurchased(MenuItemEntryIdentifier identifier) {
@@ -303,15 +340,36 @@ namespace LD50.Entities {
             Money -= item.Cost;
 
             switch (identifier) {
-                case MenuItemEntryIdentifier.Bu5SeedAmount5:
+                case MenuItemEntryIdentifier.BuySeedAmount5:
                     SeedAmount += 5;
                     break;
-                case MenuItemEntryIdentifier.Bu5SeedAmount10:
+                case MenuItemEntryIdentifier.BuySeedAmount10:
                     SeedAmount += 10;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(identifier), identifier, null);
+                case MenuItemEntryIdentifier.UpgradeWateringCanSize1:
+                    addUpgrade(PlayerUpgrade.WateringCanSizeIncreaseTo10);
+                    WateringCanMaximum = 10;
+                    WateringCanAmount = WateringCanMaximum;
+                    break;
+                case MenuItemEntryIdentifier.UpgradeWateringCanSize2:
+                    addUpgrade(PlayerUpgrade.WateringCanSizeIncreaseTo20);
+                    WateringCanMaximum  = 20;
+                    WateringCanAmount = WateringCanMaximum;
+                    break;
+                case MenuItemEntryIdentifier.UpgradeWateringCanSize3:
+                    addUpgrade(PlayerUpgrade.WateringCanSizeIncreaseTo30);
+                    WateringCanMaximum = 30;
+                    WateringCanAmount = WateringCanMaximum;
+                    break;
             }
+
+            populateShopMenu();
+            EventBus.Emit(nameof(EventBus.OpenShopMenu));
+        }
+
+        private void addUpgrade(PlayerUpgrade upgrade) {
+            playerUpgrades.Add(upgrade);
+            EventBus.Emit(nameof(EventBus.UpgradeObtained), upgrade);
         }
     }
 }

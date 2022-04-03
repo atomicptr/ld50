@@ -2,8 +2,11 @@ using LD50.Constants;
 
 namespace LD50.UserInterface.ShopMenu {
     public enum MenuItemEntryIdentifier {
-        Bu5SeedAmount5,
-        Bu5SeedAmount10,
+        BuySeedAmount5,
+        BuySeedAmount10,
+        UpgradeWateringCanSize1,
+        UpgradeWateringCanSize2,
+        UpgradeWateringCanSize3,
     }
 
     public readonly struct MenuItemEntry {

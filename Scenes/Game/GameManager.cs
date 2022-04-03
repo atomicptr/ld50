@@ -8,6 +8,7 @@ using LD50.Common;
 using LD50.Constants;
 using LD50.Entities;
 using LD50.Entities.Plant;
+using LD50.UserInterface.ShopMenu;
 
 namespace LD50.Scenes.Game {
     public class GameManager : Node2D {
@@ -32,6 +33,8 @@ namespace LD50.Scenes.Game {
 
             // remove red modulate from barrier
             tileMap.TileSet.TileSetModulate((int) TileMapTiles.Barrier, Colors.White);
+
+            EventBus.ConnectEvent(nameof(EventBus.UpgradeObtained), this, nameof(onUpgradeObtained));
         }
 
         public override void _Process(float delta) {
@@ -193,6 +196,10 @@ namespace LD50.Scenes.Game {
                 EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline);
                 loanProcessor.AdvanceToNextStage();
             }
+        }
+
+        private void onUpgradeObtained(PlayerUpgrade upgrade) {
+            // TODO: handle GameManager specific upgrades
         }
     }
 }
