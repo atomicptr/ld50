@@ -14,6 +14,9 @@ namespace LD50.Autoload {
         [Signal]
         public delegate void SeedAmountChanged(int seed);
 
+        [Signal]
+        public delegate void NextPaymentThresholdAnnounced(int nextThreshold);
+
         private static EventBus instance;
 
         public static EventBus Instance {

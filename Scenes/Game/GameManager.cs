@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using Godot;
 using Godot.Collections;
@@ -5,19 +6,23 @@ using JetBrains.Annotations;
 using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
+using LD50.Entities;
 using LD50.Entities.Plant;
 
 namespace LD50.Scenes.Game {
     public class GameManager : Node2D {
         [GetNode("TileMap")] private TileMap tileMap;
         [GetNode("YSort/Plants")] private YSort plants;
+        [GetNode("YSort/Player")] private Player player;
 
-        private static PackedScene plantScene = GD.Load<PackedScene>("res://Entities/Plant/Plant.tscn");
+        private static readonly PackedScene plantScene = GD.Load<PackedScene>("res://Entities/Plant/Plant.tscn");
+        private readonly LoanProcessor loanProcessor = new LoanProcessor();
 
-        private Dictionary<Vector2, int> turnPlotWasWatered = new Dictionary<Vector2, int>();
-        private Dictionary<Vector2, Plant> plantedPlants = new Dictionary<Vector2, Plant>();
+        private readonly Dictionary<Vector2, int> turnPlotWasWatered = new Dictionary<Vector2, int>();
+        private readonly Dictionary<Vector2, Plant> plantedPlants = new Dictionary<Vector2, Plant>();
 
-        private int turn = 1;
+        private int turn = 0;
+        private int currentDeadline = PAYMENT_THRESHOLD;
 
         private const int TURNS_PLOT_STAYS_WATERED = 300;
         public const int PAYMENT_THRESHOLD = 200;
@@ -159,6 +164,32 @@ namespace LD50.Scenes.Game {
 
                 tileMap.SetCellv(wateredPlotCoord, (int) tile.Value.ToDryFarmPlot());
                 turnPlotWasWatered.Remove(wateredPlotCoord);
+            }
+
+            // pay loan
+            if (turn >= currentDeadline - 1) {
+                var nextPayment = loanProcessor.Next;
+
+                if (!nextPayment.HasValue) {
+                    // you won the game! How the hell...
+                    // TODO: add screen, you won!
+                    GD.Print("You win!");
+                    GetTree().ReloadCurrentScene();
+                }
+
+                if (player.Money - nextPayment.Value < 0) {
+                    // you went into the red -> you lost
+                    // TODO: add screen, you lost
+                    GD.Print("You lost!!!");
+                    GetTree().ReloadCurrentScene();
+                }
+
+                // player could pay the next payment, so continue...
+                player.Money -= nextPayment.Value;
+
+                currentDeadline += PAYMENT_THRESHOLD;
+                EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline);
+                loanProcessor.AdvanceToNextAmount();
             }
         }
     }

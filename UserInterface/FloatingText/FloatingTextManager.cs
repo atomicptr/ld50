@@ -48,8 +48,6 @@ namespace LD50.UserInterface {
         }
 
         public override void _Process(float delta) {
-            GD.Print(cooldownTimer.TimeLeft, "-- Q: ", queue.Count);
-
             if (cooldownTimer != null && cooldownTimer.IsStopped() && queue.Count > 0) {
                 spawnNextFloatingText();
                 cooldownTimer.Start();
