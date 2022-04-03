@@ -10,6 +10,8 @@ namespace LD50.UserInterface.ShopMenu {
         FarmPlotUpgrade1,
         FarmPlotUpgrade2,
         FarmPlotUpgrade3,
+        PlowEntireField,
+        WaterEntireField,
     }
 
     public readonly struct MenuItemEntry {

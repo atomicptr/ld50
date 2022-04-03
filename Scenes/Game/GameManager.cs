@@ -65,7 +65,7 @@ namespace LD50.Scenes.Game {
             return !tile.Value.IsBarrier();
         }
 
-        public void PlowFarmPlot(Vector2 coords) {
+        public void PlowFarmPlot(Vector2 coords, bool nextTurn=true) {
             var tile = CellAt(coords);
             if (!tile.HasValue) {
                 return;
@@ -76,14 +76,17 @@ namespace LD50.Scenes.Game {
             }
 
             tileMap.SetCellv(coords, (int) tile.Value.ToPlowedFarmPlot());
-            NextTurn();
+
+            if (nextTurn) {
+                NextTurn();
+            }
         }
 
         public bool IsFarmPlotWatered(Vector2 coords) {
             return turnPlotWasWatered.ContainsKey(coords);
         }
 
-        public void WaterFarmPlot(Vector2 coords) {
+        public void WaterFarmPlot(Vector2 coords, bool nextTurn=true) {
             if (IsFarmPlotWatered(coords)) {
                 return;
             }
@@ -95,7 +98,10 @@ namespace LD50.Scenes.Game {
 
             turnPlotWasWatered[coords] = turn;
             tileMap.SetCellv(coords, (int) tile.Value.ToWateredFarmPlot());
-            NextTurn();
+
+            if (nextTurn) {
+                NextTurn();
+            }
         }
 
         public bool HasPlant(Vector2 coords) {
@@ -217,9 +223,13 @@ namespace LD50.Scenes.Game {
             foreach (var cellv in tileMap.GetUsedCells().OfType<Vector2>()) {
                 var cellId = tileMap.GetCellv(cellv);
 
-                if (cellId == (int) TileMapTiles.FarmPlotNorthWest) {
-                    farmPlotStart = cellv;
-                    break;
+                switch (cellId) {
+                    case (int) TileMapTiles.FarmPlotNorthWest:
+                    case (int) TileMapTiles.PlowedFarmPlotNorthWest:
+                    case (int) TileMapTiles.WateredFarmPlotNorthWest:
+                    case (int) TileMapTiles.WateredPlowedFarmPlotNorthWest:
+                        farmPlotStart = cellv;
+                        break;
                 }
             }
 
@@ -265,6 +275,50 @@ namespace LD50.Scenes.Game {
                     tileMap.SetCellv(cellv, (int) tile);
                 }
             }
+        }
+
+        public void WaterAllFarmPlots() {
+            foreach (var cellv in tileMap.GetUsedCells().OfType<Vector2>()) {
+                var tile = (TileMapTiles) tileMap.GetCellv(cellv);
+
+                if (tile.IsFarmPlot() && !IsFarmPlotWatered(cellv)) {
+                    WaterFarmPlot(cellv, false);
+                }
+            }
+        }
+
+        public bool HasUnwateredFarmPlot() {
+            foreach (var cellv in tileMap.GetUsedCells().OfType<Vector2>()) {
+                var tile = (TileMapTiles) tileMap.GetCellv(cellv);
+
+                if (tile.IsFarmPlot() && !IsFarmPlotWatered(cellv)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void PlowAllFarmPlots() {
+            foreach (var cellv in tileMap.GetUsedCells().OfType<Vector2>()) {
+                var tile = (TileMapTiles) tileMap.GetCellv(cellv);
+
+                if (tile.IsUntouchedFarmPlot()) {
+                    PlowFarmPlot(cellv, false);
+                }
+            }
+        }
+
+        public bool HasUnplowedFarmPlots() {
+            foreach (var cellv in tileMap.GetUsedCells().OfType<Vector2>()) {
+                var tile = (TileMapTiles) tileMap.GetCellv(cellv);
+
+                if (tile.IsUntouchedFarmPlot()) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

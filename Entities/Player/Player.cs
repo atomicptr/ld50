@@ -294,6 +294,24 @@ namespace LD50.Entities {
                 },
             };
 
+            if (gameManager.HasUnplowedFarmPlots()) {
+                shopItems[MenuItemEntryIdentifier.PlowEntireField] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.PlowEntireField,
+                    Icon.ToolHoe,
+                    "Plow entire field",
+                    8000
+                );
+            }
+
+            if (gameManager.HasUnwateredFarmPlot()) {
+                shopItems[MenuItemEntryIdentifier.WaterEntireField] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.WaterEntireField,
+                    Icon.ToolWateringCan,
+                    "Water entire field",
+                    5000
+                );
+            }
+
             if (!playerUpgrades.Contains(PlayerUpgrade.WateringCanSizeIncreaseTo10)) {
                 shopItems[MenuItemEntryIdentifier.UpgradeWateringCanSize1] = new MenuItemEntry(
                     MenuItemEntryIdentifier.UpgradeWateringCanSize1,
@@ -344,7 +362,7 @@ namespace LD50.Entities {
                 shopItems[MenuItemEntryIdentifier.FarmPlotUpgrade2] = new MenuItemEntry(
                     MenuItemEntryIdentifier.FarmPlotUpgrade2,
                     Icon.ToolHoe,
-                    "Increase farm plot size",
+                    "Increase farm plot size again",
                     5000
                 );
             }
@@ -354,10 +372,10 @@ namespace LD50.Entities {
                 playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade2) &&
                 !playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade3)
             ) {
-                shopItems[MenuItemEntryIdentifier.FarmPlotUpgrade2] = new MenuItemEntry(
-                    MenuItemEntryIdentifier.FarmPlotUpgrade2,
+                shopItems[MenuItemEntryIdentifier.FarmPlotUpgrade3] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.FarmPlotUpgrade3,
                     Icon.ToolHoe,
-                    "Increase farm plot size",
+                    "Increase farm plot size again!",
                     10000
                 );
             }
@@ -405,8 +423,12 @@ namespace LD50.Entities {
                 case MenuItemEntryIdentifier.FarmPlotUpgrade3:
                     addUpgrade(PlayerUpgrade.FarmPlotUpgrade3);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(identifier), identifier, null);
+                case MenuItemEntryIdentifier.PlowEntireField:
+                    gameManager.PlowAllFarmPlots();
+                    break;
+                case MenuItemEntryIdentifier.WaterEntireField:
+                    gameManager.WaterAllFarmPlots();
+                    break;
             }
 
             populateShopMenu();
