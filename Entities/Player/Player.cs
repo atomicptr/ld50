@@ -98,7 +98,6 @@ namespace LD50.Entities {
                 return;
             }
 
-            // TODO: add animation
             Position = grid.MapToWorld(playerGridPosition + direction);
 
             grid.NextTurn();
@@ -135,7 +134,7 @@ namespace LD50.Entities {
             var targetTile = currentTile.Value;
 
             if (targetTile.IsUntouchedFarmPlot()) {
-                actionPrompt.ShowPrompt(ActionPromptEvent.Hoe);
+                actionPrompt.ShowPrompt(Icon.ToolHoe);
                 return true;
             }
 
@@ -144,7 +143,7 @@ namespace LD50.Entities {
                 !grid.IsFarmPlotWatered(playerGridPosition) &&
                 WateringCanAmount > 0
             ) {
-                actionPrompt.ShowPrompt(ActionPromptEvent.WateringCan);
+                actionPrompt.ShowPrompt(Icon.ToolWateringCan);
                 return true;
             }
 
@@ -154,7 +153,7 @@ namespace LD50.Entities {
                 !grid.HasPlant(playerGridPosition) &&
                 SeedAmount > 0
             ) {
-                actionPrompt.ShowPrompt(ActionPromptEvent.Seed);
+                actionPrompt.ShowPrompt(Icon.Money);
                 return true;
             }
 
@@ -162,7 +161,7 @@ namespace LD50.Entities {
                 var plant = grid.PlantAt(playerGridPosition);
 
                 if (plant.IsFullyGrown()) {
-                    actionPrompt.ShowPrompt(ActionPromptEvent.Sell);
+                    actionPrompt.ShowPrompt(Icon.Money);
                     return true;
                 }
             }
@@ -172,7 +171,7 @@ namespace LD50.Entities {
                 if (tileAbove.HasValue) {
                     // TODO: refactor this
                     if (WateringCanAmount< WateringCanMaximum && tileAbove.Value == TileMapTiles.WaterTankBottom) {
-                        actionPrompt.ShowPrompt(ActionPromptEvent.Water);
+                        actionPrompt.ShowPrompt(Icon.ToolWater);
                         return true;
                     }
                 }
