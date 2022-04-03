@@ -112,4 +112,5 @@ anims/RESET = SubResource( 2 )
 position = Vector2( 8, -8 )
 
 [node name="FloatingTextManager" type="Node2D" parent="."]
+position = Vector2( -4, -4 )
 script = ExtResource( 5 )
