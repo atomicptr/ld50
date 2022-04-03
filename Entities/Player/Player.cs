@@ -162,7 +162,7 @@ namespace LD50.Entities {
                 !gameManager.HasPlant(playerGridPosition) &&
                 SeedAmount > 0
             ) {
-                actionPrompt.ShowPrompt(Icon.Money);
+                actionPrompt.ShowPrompt(Icon.ToolSeeds);
                 return true;
             }
 
