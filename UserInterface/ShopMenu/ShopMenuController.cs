@@ -18,9 +18,6 @@ namespace LD50.UserInterface.ShopMenu {
         private VBoxContainer menuItems;
 
         private MenuItem selectedMenuItem = null;
-        private NinePatchRect selector = null;
-        private bool showKeyboardPrompt = true;
-        private ControllerType controllerType = ControllerType.XboxController;
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
@@ -50,29 +47,12 @@ namespace LD50.UserInterface.ShopMenu {
                 return;
             }
 
-            if (@event is InputEventKey) {
-                showKeyboardPrompt = true;
-            } else if (@event is InputEventJoypadButton || @event is InputEventJoypadMotion) {
-                showKeyboardPrompt = false;
-                controllerType = ActionPrompt.DetermineControllerTypeByName(
-                    Input.GetJoyName((int) Input.GetConnectedJoypads()[@event.Device])
-                );
-            }
+            foreach (var item in menuItems.GetChildren().OfType<MenuItem>()) {
+                var selector = item.GetNodeOrNull<NinePatchRect>("Selector");
 
-            selector = selectedMenuItem.GetNode<NinePatchRect>("Selector");
-
-            if (showKeyboardPrompt) {
-                selector.RegionRect = Icon.ButtonPromptKeyboard.ToRect();
-                return;
-            }
-
-            switch (controllerType) {
-                case ControllerType.XboxController:
-                    selector.RegionRect = Icon.ButtonPromptXboxInteract.ToRect();
-                    break;
-                case ControllerType.PS4Controller:
-                    selector.RegionRect = Icon.ButtonPromptPSInteract.ToRect();
-                    break;
+                if (selector != null) {
+                    selector.RegionRect = InputDeviceHandler.InteractIcon.ToRect();
+                }
             }
         }
 
