@@ -11,6 +11,9 @@ namespace LD50.Autoload {
         [Signal]
         public delegate void WateringCanAmountChanged(int amount);
 
+        [Signal]
+        public delegate void SeedAmountChanged(int seed);
+
         private static EventBus instance;
 
         public static EventBus Instance {

@@ -21,8 +21,6 @@ namespace LD50.Entities {
             }
         }
 
-        private int money;
-
         [Export]
         public int WateringCanAmount {
             get => wateringCanAmount;
@@ -38,7 +36,25 @@ namespace LD50.Entities {
             }
         }
 
+
+        [Export]
+        public int SeedAmount {
+            get => seedAmount;
+            set {
+                seedAmount = Mathf.Clamp(value, 0, int.MaxValue);
+
+                if (!IsInsideTree()) {
+                    ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.SeedAmountChanged), seedAmount));
+                    return;
+                }
+
+                EventBus.Emit(nameof(EventBus.SeedAmountChanged), seedAmount);
+            }
+        }
+
+        private int money;
         private int wateringCanAmount;
+        private int seedAmount;
 
         public int WateringCanMaximum = 5;
 
@@ -130,7 +146,12 @@ namespace LD50.Entities {
                 return true;
             }
 
-            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition) && !grid.HasPlant(playerGridPosition)) {
+            if (
+                targetTile.IsFarmPlot() &&
+                grid.IsFarmPlotWatered(playerGridPosition) &&
+                !grid.HasPlant(playerGridPosition) &&
+                SeedAmount > 0
+            ) {
                 actionPrompt.ShowPrompt(ActionPromptEvent.Seed);
                 return true;
             }
@@ -180,9 +201,15 @@ namespace LD50.Entities {
                 return;
             }
 
-            if (targetTile.IsFarmPlot() && grid.IsFarmPlotWatered(playerGridPosition) && !grid.HasPlant(playerGridPosition)) {
+            if (
+                targetTile.IsFarmPlot() &&
+                grid.IsFarmPlotWatered(playerGridPosition) &&
+                !grid.HasPlant(playerGridPosition) &&
+                SeedAmount > 0
+            ) {
                 // TODO: offer multiple types of seeds
                 grid.PlaceSeed(playerGridPosition);
+                SeedAmount--;
                 grid.NextTurn();
                 playAnimation(ANIMATION_INTERACT);
             }

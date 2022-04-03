@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://UserInterface/Container/Container.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/ui.png" type="Texture" id=2]
@@ -6,9 +6,63 @@
 [ext_resource path="res://UserInterface/GameUserInterface/MoneyUI.cs" type="Script" id=4]
 [ext_resource path="res://UserInterface/GameUserInterface/TurnCounterUI.cs" type="Script" id=5]
 [ext_resource path="res://UserInterface/GameUserInterface/PaymentThresholdUI.cs" type="Script" id=6]
+[ext_resource path="res://UserInterface/GameUserInterface/SeedUI.cs" type="Script" id=7]
 
 [node name="GameUserInterface" type="Control"]
 anchor_right = 1.0
+
+[node name="PaymenThresholdtUI" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -87.5
+margin_top = 5.0
+margin_right = 87.5
+margin_bottom = 24.0
+script = ExtResource( 6 )
+
+[node name="Icon" type="NinePatchRect" parent="PaymenThresholdtUI"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -9.0
+margin_right = 21.0
+margin_bottom = 7.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 80, 16, 16, 16 )
+
+[node name="Label" type="Label" parent="PaymenThresholdtUI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -152.0
+margin_top = -7.5
+margin_right = -1.0
+margin_bottom = 6.5
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Next payment is due in 9999 turns"
+align = 2
+
+[node name="TurnCounterUI" parent="." instance=ExtResource( 1 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 67.0
+margin_bottom = 24.0
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="TurnCounterUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -22.5
+margin_top = -7.5
+margin_right = 22.5
+margin_bottom = 5.5
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Turn: 1"
+align = 1
+valign = 1
 
 [node name="MoneyUI" parent="." instance=ExtResource( 1 )]
 margin_left = 5.0
@@ -68,37 +122,14 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "?"
 align = 2
 
-[node name="TurnCounterUI" parent="." instance=ExtResource( 1 )]
+[node name="SeedUI" parent="." instance=ExtResource( 1 )]
 margin_left = 5.0
-margin_top = 5.0
+margin_top = 65.0
 margin_right = 67.0
-margin_bottom = 24.0
-script = ExtResource( 5 )
+margin_bottom = 84.0
+script = ExtResource( 7 )
 
-[node name="Label" type="Label" parent="TurnCounterUI"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -22.5
-margin_top = -7.5
-margin_right = 22.5
-margin_bottom = 5.5
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Turn: 1"
-align = 1
-valign = 1
-
-[node name="PaymenThresholdtUI" parent="." instance=ExtResource( 1 )]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -87.5
-margin_top = 5.0
-margin_right = 87.5
-margin_bottom = 24.0
-script = ExtResource( 6 )
-
-[node name="Icon" type="NinePatchRect" parent="PaymenThresholdtUI"]
+[node name="Icon" type="NinePatchRect" parent="SeedUI"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 5.0
@@ -106,17 +137,16 @@ margin_top = -9.0
 margin_right = 21.0
 margin_bottom = 7.0
 texture = ExtResource( 2 )
-region_rect = Rect2( 80, 16, 16, 16 )
+region_rect = Rect2( 32, 16, 16, 16 )
 
-[node name="Label" type="Label" parent="PaymenThresholdtUI"]
+[node name="Label" type="Label" parent="SeedUI"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -152.0
-margin_top = -7.5
-margin_right = -1.0
-margin_bottom = 6.5
+margin_left = -30.0
+margin_top = -8.0
+margin_right = -5.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Next payment is due in 9999 turns"
+text = "?"
 align = 2

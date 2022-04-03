@@ -80,6 +80,7 @@ tracks/1/keys = {
 script = ExtResource( 2 )
 Money = 5000
 WateringCanAmount = 5
+SeedAmount = 5
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 8, 8 )
