@@ -67,6 +67,9 @@ namespace LD50.Entities {
         [GetNode("AnimationPlayer")] private AnimationPlayer animationPlayer;
         [GetNode("ActionPrompt")] private ActionPrompt actionPrompt;
         [GetNode("FloatingTextManager")] private FloatingTextManager floatingTextManager;
+        [GetNode("InteractSound")] private AudioStreamPlayer2D interactSound;
+        [GetNode("JumpSound")] private AudioStreamPlayer2D jumpSound;
+        [GetNode("MoneySound")] private AudioStreamPlayer2D moneySound;
 
         private Vector2 playerGridPosition = Vector2.Zero;
 
@@ -110,6 +113,8 @@ namespace LD50.Entities {
             }
 
             Position = gameManager.MapToWorld(playerGridPosition + direction);
+
+            jumpSound.Play();
 
             gameManager.NextTurn();
 
@@ -261,6 +266,7 @@ namespace LD50.Entities {
                 if (plant.IsFullyGrown()) {
                     // TODO: maybe only put it inventory and have to turn it in somewhere?
                     Money += plant.ProduceValue;
+                    moneySound.Play();
                     floatingTextManager.Spawn(Icon.Money, plant.ProduceValue);
                     gameManager.RemovePlant(playerGridPosition);
                 }
@@ -274,10 +280,15 @@ namespace LD50.Entities {
             }
         }
 
-        private void playAnimation(string animationName) {
+        private void playAnimation(string animationName, bool playSound = true) {
             if (animationPlayer.IsPlaying()) {
                 return;
             }
+
+            if (animationName == ANIMATION_INTERACT && playSound) {
+                interactSound.Play();
+            }
+
             animationPlayer.CurrentAnimation = animationName;
             animationPlayer.Play();
         }
