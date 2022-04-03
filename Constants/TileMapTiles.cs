@@ -61,6 +61,36 @@ namespace LD50.Constants {
         HouseFrontBottomRight = 58,
         HouseFrontShopSign = 59,
         HouseFrontDoor = 60,
+        StreetWE = 61,
+        StreetNS = 62,
+        RailsNorthWest = 63,
+        RailsNorthMid = 64,
+        RailsNorthEast = 65,
+        RailsMidWest = 66,
+        RailsMidMid = 67,
+        RailsMidEast = 68,
+        RailsSouthWest = 69,
+        RailsSouthMid = 70,
+        RailsSouthEast = 71,
+        RailsEndNorth1 = 72,
+        RailsEndNorth2 = 73,
+        RailsEndSouth1 = 74,
+        RailsEndSouth2 = 75,
+        RailsNorthWest2 = 76,
+        RailsNorthMid2 = 77,
+        RailsNorthEast2 = 78,
+        RailsMidWest2 = 79,
+        RailsMidMid2 = 80,
+        RailsMidEast2 = 81,
+        RailsSouthWest2 = 82,
+        RailsSouthMid2 = 83,
+        RailsSouthEast2 = 84,
+        RailEndEast1 = 85,
+        StreetWEMidTop = 86,
+        RailEndEast2 = 87,
+        StreetWEMidBottom = 88,
+        RailsEndWest1 = 89,
+        RailsEndWest2 = 90,
     }
 
     public static class TileMapTilesExtension {
@@ -88,6 +118,34 @@ namespace LD50.Constants {
                 case TileMapTiles.HouseFrontBottomRight:
                 case TileMapTiles.HouseFrontShopSign:
                 case TileMapTiles.HouseFrontDoor:
+                case TileMapTiles.RailsNorthWest:
+                case TileMapTiles.RailsNorthMid:
+                case TileMapTiles.RailsNorthEast:
+                case TileMapTiles.RailsMidWest:
+                case TileMapTiles.RailsMidMid:
+                case TileMapTiles.RailsMidEast:
+                case TileMapTiles.RailsSouthWest:
+                case TileMapTiles.RailsSouthMid:
+                case TileMapTiles.RailsSouthEast:
+                case TileMapTiles.RailsEndNorth1:
+                case TileMapTiles.RailsEndNorth2:
+                case TileMapTiles.RailsEndSouth1:
+                case TileMapTiles.RailsEndSouth2:
+                case TileMapTiles.RailsNorthWest2:
+                case TileMapTiles.RailsNorthMid2:
+                case TileMapTiles.RailsNorthEast2:
+                case TileMapTiles.RailsMidWest2:
+                case TileMapTiles.RailsMidMid2:
+                case TileMapTiles.RailsMidEast2:
+                case TileMapTiles.RailsSouthWest2:
+                case TileMapTiles.RailsSouthMid2:
+                case TileMapTiles.RailsSouthEast2:
+                case TileMapTiles.RailEndEast1:
+                case TileMapTiles.StreetWEMidTop:
+                case TileMapTiles.RailEndEast2:
+                case TileMapTiles.StreetWEMidBottom:
+                case TileMapTiles.RailsEndWest1:
+                case TileMapTiles.RailsEndWest2:
                     return true;
                 default:
                     return false;
