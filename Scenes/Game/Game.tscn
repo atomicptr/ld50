@@ -22,7 +22,6 @@ tile_data = PoolIntArray( -1179707, 76, 0, -1179706, 77, 0, -1179705, 77, 0, -11
 
 [node name="Player" parent="GameManager/YSort" instance=ExtResource( 3 )]
 position = Vector2( 128, 80 )
-Money = 5000000
 
 [node name="Plants" type="YSort" parent="GameManager/YSort"]
 

@@ -11,8 +11,9 @@ config_version=4
 [application]
 
 config/name="ld50"
+config/description="You're a farming bunny deep in the red, hop around, farm as much as you can and try to delay your inevitable bankruptcy!"
 run/main_scene="res://Scenes/Game/Game.tscn"
-config/icon="res://icon.png"
+config/icon="res://Assets/icon.png"
 
 [autoload]
 

@@ -1,10 +1,10 @@
-# ld50 - Name pending
+# ld50 - Farming until bankruptcy
 
 My game submission for the Ludum Dare #50 Compo "Delay the inevitable".
 
 ## Description
 
-You're a farming bunny deep in the red, hop around and try to delay your inevitable bankruptcy!
+You're a farming bunny deep in the red, hop around, farm as much as you can and try to delay your inevitable bankruptcy!
 
 ## Play!
 
@@ -17,6 +17,7 @@ You're a farming bunny deep in the red, hop around and try to delay your inevita
 * **Programming Language**: C#
 * **IDE**: JetBrains Rider
 * **Art**: Aseprite
+* **Audio**: jfxr
 
 ## Attributions
 
