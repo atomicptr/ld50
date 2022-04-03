@@ -52,6 +52,8 @@ namespace LD50.Constants {
                 case TileMapTiles.InvisibleBarrier:
                 case TileMapTiles.Barrier:
                 case TileMapTiles.Block:
+                case TileMapTiles.WaterTankTop:
+                case TileMapTiles.WaterTankBottom:
                     return true;
                 default:
                     return false;
@@ -60,7 +62,8 @@ namespace LD50.Constants {
 
         public static bool IsFarmPlot(this TileMapTiles tile) {
             var index = (int) tile;
-            return index >= (int) TileMapTiles.FarmPlotNorthWest && index <= (int) TileMapTiles.WateredPlowedFarmPlotSouthEast;
+            return index >= (int) TileMapTiles.FarmPlotNorthWest &&
+                   index <= (int) TileMapTiles.WateredPlowedFarmPlotSouthEast;
         }
 
         public static bool IsUntouchedFarmPlot(this TileMapTiles tile) {

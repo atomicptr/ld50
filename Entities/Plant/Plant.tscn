@@ -3,10 +3,11 @@
 [ext_resource path="res://Assets/player.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Plant/Plant.cs" type="Script" id=2]
 
-[node name="Plant" type="Node2D"]
+[node name="Plant" type="Node2D" groups=["plant"]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 8, 1 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 16, 0, 16, 16 )
+region_rect = Rect2( 16, 0, 16, 22 )

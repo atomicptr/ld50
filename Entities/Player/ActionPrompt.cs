@@ -8,6 +8,7 @@ namespace LD50.Entities {
         Hoe,
         Seed,
         Water,
+        Sell,
     }
 
     public enum ControllerType {
@@ -31,6 +32,7 @@ namespace LD50.Entities {
         private readonly Rect2 hoePromptRect = new Rect2(16, 16, 16, 16);
         private readonly Rect2 seedPromptRect = new Rect2(32, 16, 16, 16);
         private readonly Rect2 waterPromptRect = new Rect2(48, 16, 16, 16);
+        private readonly Rect2 sellPromptRect = new Rect2(64, 16, 16, 16);
 
         public override void _Ready() {
             GetNodeAttribute.Load(this);
@@ -93,6 +95,9 @@ namespace LD50.Entities {
                     break;
                 case ActionPromptEvent.Water:
                     iconPrompt.RegionRect = waterPromptRect;
+                    break;
+                case ActionPromptEvent.Sell:
+                    iconPrompt.RegionRect = sellPromptRect;
                     break;
             }
 

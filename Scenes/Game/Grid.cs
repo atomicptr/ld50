@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using JetBrains.Annotations;
 using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
@@ -99,22 +100,43 @@ namespace LD50.Scenes.Game {
 
             var plant = plantScene.Instance<Plant>();
             plants.AddChild(plant);
-            plant.Position = MapToWorld(coords);
             plantedPlants[coords] = plant;
+
+            var position = MapToWorld(coords);;
+            position.y -= 1; // HACK: to make YSort work properly with the tiles
+            plant.Position = position;
+        }
+
+        [CanBeNull]
+        public Plant PlantAt(Vector2 coords) {
+            if (!HasPlant(coords)) {
+                return null;
+            }
+
+            return plantedPlants[coords];
+        }
+
+        public void RemovePlant(Vector2 coords) {
+            if (!HasPlant(coords)) {
+                return;
+            }
+
+            var plant = plantedPlants[coords];
+            plant.QueueFree();
+            plantedPlants.Remove(coords);
         }
 
         public void NextTurn() {
             progressWorld();
 
             turn++;
-            GD.Print("Turn: ", turn);
             EventBus.Emit(nameof(EventBus.TurnChanged), turn);
         }
 
         private void progressWorld() {
             // grow plants
-            foreach (var plant in plants.GetChildren().OfType<Plant>()) {
-                var plantGridPos = WorldToMap(plant.Position);
+            foreach (var plantGridPos in plantedPlants.Keys) {
+                var plant = plantedPlants[plantGridPos];
 
                 if (!IsFarmPlotWatered(plantGridPos)) {
                     continue;

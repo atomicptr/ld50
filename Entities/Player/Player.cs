@@ -135,6 +135,15 @@ namespace LD50.Entities {
                 return true;
             }
 
+            if (targetTile.IsFarmPlot() && grid.HasPlant(playerGridPosition)) {
+                var plant = grid.PlantAt(playerGridPosition);
+
+                if (plant.IsFullyGrown()) {
+                    actionPrompt.ShowPrompt(ActionPromptEvent.Sell);
+                    return true;
+                }
+            }
+
             if (targetTile == TileMapTiles.InteractPlate) {
                 var tileAbove = grid.CellAt(playerGridPosition + Vector2.Up);
                 if (tileAbove.HasValue) {
@@ -191,10 +200,15 @@ namespace LD50.Entities {
             }
 
             if (grid.HasPlant(playerGridPosition)) {
-                // TODO: get plant, if is fully grown, remove it and grab produce, delete plant
+                var plant = grid.PlantAt(playerGridPosition);
+
+                if (plant.IsFullyGrown()) {
+                    // TODO: maybe only put it inventory and have to turn it in somewhere?
+                    Money += plant.ProduceValue;
+                    grid.RemovePlant(playerGridPosition);
+                }
             }
 
-            // TODO: if plot has plant and is not watered (anymore) water again
             if (grid.HasPlant(playerGridPosition) && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 grid.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;

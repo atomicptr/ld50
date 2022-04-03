@@ -11,6 +11,7 @@ namespace LD50.Entities.Plant {
     }
 
     public class Plant : Node2D {
+        [Export] public int ProduceValue = 500;
         [Export] private readonly int growTurns = 50;
 
         private PlantStage plantStage = PlantStage.SeedsPlanted;
@@ -18,7 +19,7 @@ namespace LD50.Entities.Plant {
 
         [GetNode("Sprite")] private Sprite sprite;
 
-        private static readonly Rect2 seedStageRect = new Rect2(16, 0, 16, 16);
+        private static readonly Rect2 seedStageRect = new Rect2(16, 0, 16, 22);
         private static readonly Rect2 growingStageRect = new Rect2(32, 0, 16, 22);
         private static readonly Rect2 fullyGrownStageRect = new Rect2(48, 0, 16, 22);
 
@@ -53,10 +54,10 @@ namespace LD50.Entities.Plant {
                     sprite.RegionRect = fullyGrownStageRect;
                     break;
             }
+        }
 
-            var y = plantStage == PlantStage.SeedsPlanted ? 4.0f : 0.0f;
-
-            sprite.Position = new Vector2(8.0f, y);
+        public bool IsFullyGrown() {
+            return plantStage == PlantStage.FullyGrown;
         }
     }
 }
