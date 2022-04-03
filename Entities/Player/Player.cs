@@ -3,6 +3,7 @@ using LD50.Autoload;
 using LD50.Common;
 using LD50.Constants;
 using LD50.Scenes.Game;
+using LD50.UserInterface;
 
 namespace LD50.Entities {
     public class Player : Node2D {
@@ -62,6 +63,7 @@ namespace LD50.Entities {
         [GetNode("MoveCooldown")] private Timer moveCooldown;
         [GetNode("AnimationPlayer")] private AnimationPlayer animationPlayer;
         [GetNode("ActionPrompt")] private ActionPrompt actionPrompt;
+        [GetNode("FloatingTextManager")] private FloatingTextManager floatingTextManager;
 
         private Vector2 playerGridPosition = Vector2.Zero;
 
@@ -197,6 +199,7 @@ namespace LD50.Entities {
             if (targetTile.IsPlowedFarmPlot() && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 grid.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
+                floatingTextManager.Spawn(Icon.ToolWateringCan, -1);
                 playAnimation(ANIMATION_INTERACT);
                 return;
             }
@@ -210,6 +213,7 @@ namespace LD50.Entities {
                 // TODO: offer multiple types of seeds
                 grid.PlaceSeed(playerGridPosition);
                 SeedAmount--;
+                floatingTextManager.Spawn(Icon.ToolSeeds, -1);
                 grid.NextTurn();
                 playAnimation(ANIMATION_INTERACT);
             }
@@ -219,6 +223,7 @@ namespace LD50.Entities {
                 if (tileAbove.HasValue) {
                     // TODO: refactor this
                     if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
+                        floatingTextManager.Spawn(Icon.ToolWateringCan, WateringCanMaximum - WateringCanAmount);
                         WateringCanAmount = WateringCanMaximum;
                         grid.NextTurn();
                         playAnimation(ANIMATION_INTERACT);
@@ -232,6 +237,7 @@ namespace LD50.Entities {
                 if (plant.IsFullyGrown()) {
                     // TODO: maybe only put it inventory and have to turn it in somewhere?
                     Money += plant.ProduceValue;
+                    floatingTextManager.Spawn(Icon.Money, plant.ProduceValue);
                     grid.RemovePlant(playerGridPosition);
                 }
             }
@@ -239,6 +245,7 @@ namespace LD50.Entities {
             if (grid.HasPlant(playerGridPosition) && !grid.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 grid.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
+                floatingTextManager.Spawn(Icon.ToolWateringCan, -1);
                 playAnimation(ANIMATION_INTERACT);
             }
         }
