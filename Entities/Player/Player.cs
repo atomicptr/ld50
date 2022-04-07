@@ -14,11 +14,18 @@ namespace LD50.Entities {
         public int Money {
             get => money;
             set {
+                var oldValue = money;
                 money = Mathf.Clamp(value, 0, int.MaxValue);
 
                 if (!IsInsideTree()) {
                     ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.MoneyValueChanged), money));
                     return;
+                }
+
+                floatingTextManager.Spawn(Icon.Money, money - oldValue);
+
+                if (money > oldValue) {
+                    moneySound.Play();
                 }
 
                 EventBus.Emit(nameof(EventBus.MoneyValueChanged), money);
@@ -29,12 +36,15 @@ namespace LD50.Entities {
         public int WateringCanAmount {
             get => wateringCanAmount;
             set {
+                var oldValue = wateringCanAmount;
                 wateringCanAmount = Mathf.Clamp(value, 0, WateringCanMaximum);
 
                 if (!IsInsideTree()) {
                     ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.WateringCanAmountChanged), wateringCanAmount));
                     return;
                 }
+
+                floatingTextManager.Spawn(Icon.ToolWateringCan, wateringCanAmount - oldValue);
 
                 EventBus.Emit(nameof(EventBus.WateringCanAmountChanged), wateringCanAmount);
             }
@@ -45,12 +55,15 @@ namespace LD50.Entities {
         public int SeedAmount {
             get => seedAmount;
             set {
+                var oldValue = seedAmount;
                 seedAmount = Mathf.Clamp(value, 0, int.MaxValue);
 
                 if (!IsInsideTree()) {
                     ToSignal(this, "ready").OnCompleted(() => EventBus.Emit(nameof(EventBus.SeedAmountChanged), seedAmount));
                     return;
                 }
+
+                floatingTextManager.Spawn(Icon.ToolSeeds, seedAmount - oldValue);
 
                 EventBus.Emit(nameof(EventBus.SeedAmountChanged), seedAmount);
             }
@@ -220,7 +233,6 @@ namespace LD50.Entities {
             if (targetTile.IsPlowedFarmPlot() && !gameManager.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 gameManager.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
-                floatingTextManager.Spawn(Icon.ToolWateringCan, -1);
                 playAnimation(ANIMATION_INTERACT);
                 return;
             }
@@ -234,7 +246,6 @@ namespace LD50.Entities {
                 // TODO: offer multiple types of seeds
                 gameManager.PlaceSeed(playerGridPosition);
                 SeedAmount--;
-                floatingTextManager.Spawn(Icon.ToolSeeds, -1);
                 gameManager.NextTurn();
                 playAnimation(ANIMATION_INTERACT);
             }
@@ -244,7 +255,6 @@ namespace LD50.Entities {
                 if (tileAbove.HasValue) {
                     // TODO: refactor this
                     if (tileAbove.Value == TileMapTiles.WaterTankBottom) {
-                        floatingTextManager.Spawn(Icon.ToolWateringCan, WateringCanMaximum - WateringCanAmount);
                         WateringCanAmount = WateringCanMaximum;
                         gameManager.NextTurn();
                         playAnimation(ANIMATION_INTERACT);
@@ -266,8 +276,6 @@ namespace LD50.Entities {
                 if (plant.IsFullyGrown()) {
                     // TODO: maybe only put it inventory and have to turn it in somewhere?
                     Money += plant.ProduceValue;
-                    moneySound.Play();
-                    floatingTextManager.Spawn(Icon.Money, plant.ProduceValue);
                     gameManager.RemovePlant(playerGridPosition);
                 }
             }
@@ -275,7 +283,6 @@ namespace LD50.Entities {
             if (gameManager.HasPlant(playerGridPosition) && !gameManager.IsFarmPlotWatered(playerGridPosition) && WateringCanAmount > 0) {
                 gameManager.WaterFarmPlot(playerGridPosition);
                 WateringCanAmount--;
-                floatingTextManager.Spawn(Icon.ToolWateringCan, -1);
                 playAnimation(ANIMATION_INTERACT);
             }
         }

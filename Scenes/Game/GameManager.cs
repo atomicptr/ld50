@@ -204,8 +204,12 @@ namespace LD50.Scenes.Game {
                 player.Money -= nextPayment.Value;
 
                 currentDeadline += PAYMENT_THRESHOLD;
-                EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline, nextPayment.Value);
                 loanProcessor.AdvanceToNextStage();
+
+                nextPayment = loanProcessor.Next;
+                if (nextPayment.HasValue) {
+                    EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline, nextPayment.Value);
+                }
             }
         }
 

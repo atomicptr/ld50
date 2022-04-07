@@ -15,7 +15,7 @@ namespace LD50.UserInterface {
         public void Render(Icon renderIcon, int value, Vector2 travelPath, float duration) {
             icon.RegionRect = renderIcon.ToRect();
 
-            var sign = value >= 0 ? "+" : "-";
+            var sign = value >= 0 ? "+" : "";
 
             var text = $"{sign}{value}";
             label.Text = text;
