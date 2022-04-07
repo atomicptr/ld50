@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Godot;
 using LD50.Autoload;
@@ -275,7 +274,9 @@ namespace LD50.Entities {
 
                 if (plant.IsFullyGrown()) {
                     // TODO: maybe only put it inventory and have to turn it in somewhere?
-                    Money += plant.ProduceValue;
+                    Money += playerUpgrades.Contains(PlayerUpgrade.IncreasedProduceValue) ?
+                        Mathf.RoundToInt(plant.ProduceValue * 1.25f) :
+                        plant.ProduceValue;
                     gameManager.RemovePlant(playerGridPosition);
                 }
             }
@@ -398,6 +399,29 @@ namespace LD50.Entities {
                 );
             }
 
+            if (playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade1) &&
+                !playerUpgrades.Contains(PlayerUpgrade.SoilUpgrade)
+            ) {
+                shopItems[MenuItemEntryIdentifier.UpgradeSoil] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.UpgradeSoil,
+                    Icon.ToolHoe,
+                    "Better soil for 25% faster produce!",
+                    10000
+                );
+            }
+
+            if (playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade1) &&
+                playerUpgrades.Contains(PlayerUpgrade.FarmPlotUpgrade2) &&
+                !playerUpgrades.Contains(PlayerUpgrade.IncreasedProduceValue)
+               ) {
+                shopItems[MenuItemEntryIdentifier.UpgradeProduceValue] = new MenuItemEntry(
+                    MenuItemEntryIdentifier.UpgradeProduceValue,
+                    Icon.ToolHoe,
+                    "Earn 25% more for your produce!",
+                    10000
+                );
+            }
+
             GlobalState.Instance.ShopItems = shopItems;
         }
 
@@ -450,6 +474,13 @@ namespace LD50.Entities {
                     break;
                 case MenuItemEntryIdentifier.WaterEntireField:
                     gameManager.WaterAllFarmPlots();
+                    break;
+                case MenuItemEntryIdentifier.UpgradeSoil:
+                    addUpgrade(PlayerUpgrade.SoilUpgrade);
+                    GlobalState.Instance.SoilUpgradePurchased = true;
+                    break;
+                case MenuItemEntryIdentifier.UpgradeProduceValue:
+                    addUpgrade(PlayerUpgrade.IncreasedProduceValue);
                     break;
             }
 

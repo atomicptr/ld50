@@ -6,5 +6,7 @@ namespace LD50.Entities {
         FarmPlotUpgrade1,
         FarmPlotUpgrade2,
         FarmPlotUpgrade3,
+        SoilUpgrade,
+        IncreasedProduceValue,
     }
 }

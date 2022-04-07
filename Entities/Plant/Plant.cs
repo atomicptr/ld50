@@ -12,7 +12,8 @@ namespace LD50.Entities.Plant {
 
     public class Plant : Node2D {
         [Export] public int ProduceValue = 500;
-        [Export] private readonly int growTurns = 50;
+        [Export] private int growTurns = 50;
+        [Export] private readonly int growTurnsOnBetterSoil = 38;
 
         private PlantStage plantStage = PlantStage.SeedsPlanted;
         private int age = 0;
@@ -28,6 +29,10 @@ namespace LD50.Entities.Plant {
         }
 
         public void ContinueGrowing() {
+            if (GlobalState.Instance.SoilUpgradePurchased) {
+                growTurns = growTurnsOnBetterSoil;
+            }
+
             age++;
 
             // if is still seeds and half the grow time has passed, advance to next stage

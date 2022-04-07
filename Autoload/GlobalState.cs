@@ -12,6 +12,7 @@ namespace LD50.Autoload {
         }
 
         public Dictionary<MenuItemEntryIdentifier, MenuItemEntry> ShopItems;
+        public bool SoilUpgradePurchased = false;
 
         public override void _Ready() {
             instance = this;

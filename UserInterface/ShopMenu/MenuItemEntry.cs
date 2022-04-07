@@ -12,6 +12,8 @@ namespace LD50.UserInterface.ShopMenu {
         FarmPlotUpgrade3,
         PlowEntireField,
         WaterEntireField,
+        UpgradeSoil,
+        UpgradeProduceValue,
     }
 
     public readonly struct MenuItemEntry {
