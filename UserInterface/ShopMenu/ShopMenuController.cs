@@ -18,6 +18,8 @@ namespace LD50.UserInterface.ShopMenu {
         private VBoxContainer menuItems;
 
         [GetNode("InputCooldown")] private Timer inputCooldown;
+        [GetNode("PurchaseSuccessSound")] private AudioStreamPlayer2D purchaseSuccessSound;
+        [GetNode("PurchaseFailedSound")] private AudioStreamPlayer2D purchaseFailedSound;
 
         private MenuItem selectedMenuItem = null;
         private MenuItemEntryIdentifier? lastIdentifier = null;
@@ -26,6 +28,7 @@ namespace LD50.UserInterface.ShopMenu {
             GetNodeAttribute.Load(this);
 
             EventBus.ConnectEvent(nameof(EventBus.OpenShopMenu), this, nameof(OpenMenu));
+            EventBus.ConnectEvent(nameof(EventBus.PurchaseFeedback), this, nameof(onPurchaseFeedbackReceived));
         }
 
         public override void _Process(float delta) {
@@ -175,6 +178,11 @@ namespace LD50.UserInterface.ShopMenu {
                 selectedMenuItem = menuItem;
                 return;
             }
+        }
+
+        private void onPurchaseFeedbackReceived(bool success) {
+            var sound = success ? purchaseSuccessSound : purchaseFailedSound;
+            sound.Play();
         }
     }
 }

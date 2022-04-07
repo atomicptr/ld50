@@ -404,8 +404,12 @@ namespace LD50.Entities {
         private void onItemPurchased(MenuItemEntryIdentifier identifier) {
             var item = GlobalState.Instance.ShopItems[identifier];
 
-            if (item.Cost > Money) {
-                return; // TODO: somehow show user this failed...
+            var purchaseWasSuccessful = Money >= item.Cost;
+
+            EventBus.Emit(nameof(EventBus.PurchaseFeedback), purchaseWasSuccessful);
+
+            if (!purchaseWasSuccessful) {
+                return;
             }
 
             Money -= item.Cost;

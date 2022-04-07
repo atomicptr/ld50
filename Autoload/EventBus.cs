@@ -29,6 +29,9 @@ namespace LD50.Autoload {
         [Signal]
         public delegate void UpgradeObtained(PlayerUpgrade upgrade);
 
+        [Signal]
+        public delegate void PurchaseFeedback(int success);
+
         private static EventBus instance;
         private readonly Dictionary<string, bool> initializedEvents = new Dictionary<string, bool>();
 
