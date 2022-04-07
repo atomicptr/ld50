@@ -14,8 +14,10 @@ You're a farming bunny deep in the red, hop around, farm as much as you can and 
 
 ## Play!
 
-* Web https://ld50.atomicptr.de
-* Original LD50 version: https://github.com/atomicptr/ld50/releases/tag/v1.0.0
+* Post LD web https://ld50.atomicptr.de
+* Post LD release: https://atomicptr.itch.io/farming-until-bankruptcy
+* Original LD50 web version: https://ld50.atomicptr.de/v1.0.0
+* Original LD50 release: https://github.com/atomicptr/ld50/releases/tag/v1.0.0
 
 ## Software Used
 
