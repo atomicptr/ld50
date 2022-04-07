@@ -2,6 +2,8 @@
 
 My game submission for the Ludum Dare #50 Compo "Delay the inevitable".
 
+[Ludum Dare Entry](https://ldjam.com/events/ludum-dare/50/farming-until-bankruptcy)
+
 ## Description
 
 You're a farming bunny deep in the red, hop around, farm as much as you can and try to delay your inevitable bankruptcy!
@@ -10,7 +12,8 @@ You're a farming bunny deep in the red, hop around, farm as much as you can and 
 
 ## Play!
 
-[Click here](https://ld50.atomicptr.de)
+* Web https://ld50.atomicptr.de
+* Original LD50 version: https://github.com/atomicptr/ld50/releases/tag/v1.0.0
 
 ## Software Used
 
