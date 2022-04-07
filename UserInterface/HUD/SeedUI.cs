@@ -2,7 +2,7 @@ using Godot;
 using LD50.Autoload;
 using LD50.Common;
 
-namespace LD50.UserInterface.GameUserInterface {
+namespace LD50.UserInterface.HUD {
     public class SeedUI : NinePatchRect {
         [GetNode("Label")] private Label label;
 

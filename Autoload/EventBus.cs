@@ -18,7 +18,7 @@ namespace LD50.Autoload {
         public delegate void SeedAmountChanged(int seed);
 
         [Signal]
-        public delegate void NextPaymentThresholdAnnounced(int nextThreshold);
+        public delegate void NextPaymentThresholdAnnounced(int nextThreshold, int amount);
 
         [Signal]
         public delegate void OpenShopMenu();

@@ -37,6 +37,13 @@ namespace LD50.Scenes.Game {
 
         public override void _Process(float delta) {
             EventBus.InitializeEvent(nameof(EventBus.TurnChanged), turn);
+
+            var nextPayment = loanProcessor.Next;
+
+            if (nextPayment.HasValue) {
+                EventBus.InitializeEvent(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline,
+                    nextPayment.Value);
+            }
         }
 
         public Vector2 MapToWorld(Vector2 coords) {
@@ -197,7 +204,7 @@ namespace LD50.Scenes.Game {
                 player.Money -= nextPayment.Value;
 
                 currentDeadline += PAYMENT_THRESHOLD;
-                EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline);
+                EventBus.Emit(nameof(EventBus.NextPaymentThresholdAnnounced), currentDeadline, nextPayment.Value);
                 loanProcessor.AdvanceToNextStage();
             }
         }

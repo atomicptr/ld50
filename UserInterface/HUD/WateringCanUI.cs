@@ -1,9 +1,8 @@
-using System;
 using Godot;
 using LD50.Autoload;
 using LD50.Common;
 
-namespace LD50.UserInterface.GameUserInterface {
+namespace LD50.UserInterface.HUD {
     public class WateringCanUI : NinePatchRect {
         [GetNode("Label")] private Label label;
 
