@@ -18,5 +18,9 @@ namespace LD50.Autoload {
             instance = this;
             PauseMode = PauseModeEnum.Process;
         }
+
+        public static void Reset() {
+            instance.SoilUpgradePurchased = false;
+        }
     }
 }

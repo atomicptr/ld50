@@ -60,5 +60,9 @@ namespace LD50.Autoload {
             Emit(eventName, values);
             instance.initializedEvents[eventName] = true;
         }
+
+        public static void Reset() {
+            instance.initializedEvents.Clear();
+        }
     }
 }
