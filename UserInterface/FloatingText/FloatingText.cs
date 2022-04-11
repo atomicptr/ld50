@@ -17,7 +17,7 @@ namespace LD50.UserInterface {
 
             var sign = value >= 0 ? "+" : "";
 
-            var text = $"{sign}{value}";
+            var text = $"{sign}{value:N0}";
             label.Text = text;
 
             RectPivotOffset = RectSize * 0.5f;

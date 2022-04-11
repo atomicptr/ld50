@@ -14,7 +14,7 @@ namespace LD50.UserInterface.GameUserInterface {
         }
 
         private void onMoneyValueChanged(int amount) {
-            label.Text = amount.ToString();
+            label.Text = amount.ToString("N0");
         }
     }
 }

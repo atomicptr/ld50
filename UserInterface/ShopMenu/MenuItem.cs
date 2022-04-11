@@ -34,7 +34,7 @@ namespace LD50.UserInterface.ShopMenu {
             selectorControl.Modulate = new Color(Colors.White, IsSelected ? 1.0f : 0.0f);
             iconControl.RegionRect = Icon.ToRect();
             nameControl.Text = Name;
-            costControl.Text = $"-{Cost}";
+            costControl.Text = $"-{Cost:N0}";
         }
     }
 }

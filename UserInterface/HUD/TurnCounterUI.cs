@@ -13,7 +13,7 @@ namespace LD50.UserInterface.HUD {
         }
 
         private void onTurnChanged(int turn) {
-            label.Text = $"Turn: {turn}";
+            label.Text = $"Turn: {turn:N0}";
         }
     }
 }

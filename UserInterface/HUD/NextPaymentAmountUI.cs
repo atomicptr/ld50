@@ -12,7 +12,7 @@ namespace LD50.UserInterface.HUD {
         }
 
         private void onNewPaymentThresholdAnnounced(int newDeadline, int amount) {
-            label.Text = $"-{amount}";
+            label.Text = $"-{amount:N0}";
         }
     }
 }
