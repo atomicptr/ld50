@@ -22,8 +22,12 @@ namespace LD50.Scenes.Game {
 
         private int turn = 0;
         private int currentDeadline = PAYMENT_THRESHOLD;
+        private int turnsPlotStaysWatered = WATERED_STATE_DURATION_BASE_FIELD;
 
-        private const int TURNS_PLOT_STAYS_WATERED = 300;
+        private const int WATERED_STATE_DURATION_BASE_FIELD = 400;
+        private const int WATERED_STATE_DURATION_UPGRADE1 = 500;
+        private const int WATERED_STATE_DURATION_UPGRADE2 = 700;
+        private const int WATERED_STATE_DURATION_UPGRADE3 = 900;
         public const int PAYMENT_THRESHOLD = 300;
 
         public override void _Ready() {
@@ -174,7 +178,7 @@ namespace LD50.Scenes.Game {
             // process watered plots
             var wateredPlotCoords = turnPlotWasWatered.Keys;
             foreach (var wateredPlotCoord in wateredPlotCoords) {
-                if (turn <= turnPlotWasWatered[wateredPlotCoord] + TURNS_PLOT_STAYS_WATERED) {
+                if (turn <= turnPlotWasWatered[wateredPlotCoord] + turnsPlotStaysWatered) {
                     continue;
                 }
 
@@ -221,12 +225,15 @@ namespace LD50.Scenes.Game {
             switch (upgrade) {
                 case PlayerUpgrade.FarmPlotUpgrade1:
                     increaseFarmPlot(6);
+                    turnsPlotStaysWatered = WATERED_STATE_DURATION_UPGRADE1;
                     break;
                 case PlayerUpgrade.FarmPlotUpgrade2:
                     increaseFarmPlot(9);
+                    turnsPlotStaysWatered = WATERED_STATE_DURATION_UPGRADE2;
                     break;
                 case PlayerUpgrade.FarmPlotUpgrade3:
                     increaseFarmPlot(12);
+                    turnsPlotStaysWatered = WATERED_STATE_DURATION_UPGRADE3;
                     break;
             }
         }
